@@ -1,0 +1,69 @@
+//Having trouble understanding the relationship between the varibles and how to use functions to scale correctly and evenly 
+
+float $center = 2;
+float $wings = .5;
+float $legs = .5;
+
+//Creates body
+polySphere -radius $center -sx 20 -sy 20 -ax 0 1 0 -cuv 2 -ch 1;
+scale -r (.82/$center) (.82/$center) (1.2/$center);
+move -r 0 ($center)  0 ;
+
+//Creates wing 1
+polySphere -radius $wings -sx 20 -sy 20 -ax 0 1 0 -cuv 2 -ch 1;
+scale -r ($wings + 1) $wings ($wings +.5);
+move -r ($wings - 1.5) ($wings + 2) 0;
+rotate -r -os -fo 0 0 -28.82649 ;
+
+//Creates wing 2
+polySphere -radius $wings -sx 20 -sy 20 -ax 0 1 0 -cuv 2 -ch 1;
+scale -r ($wings + 1) $wings ($wings +.5);
+move -r ($wings + .5) ($wings + 2) 0;
+rotate -r -os -fo 0 0 28.82649 ;
+
+//Creates front Leg
+polyCylinder -r 1 -h 2 -sx 20 -sy 1 -sz 1 -ax 0 1 0 -rcp 0 -cuv 3 -ch 1;
+scale -r .073 .345 .073 ;
+move -r -.645  1.447 .590;
+rotate -r -os -fo -18.950 0 -23.812 ;
+
+//Creates front leg
+polyCylinder -r 1 -h 2 -sx 20 -sy 1 -sz 1 -ax 0 1 0 -rcp 0 -cuv 3 -ch 1;
+scale -r .073 .345 .073 ;
+move -r .645  1.447 .590;
+rotate -r -os -fo -18.950 0 23.812 ;
+
+//Creates back leg
+polyCylinder -r 1 -h 2 -sx 20 -sy 1 -sz 1 -ax 0 1 0 -rcp 0 -cuv 3 -ch 1;
+scale -r .073 .345 .073 ;
+move -r -.645  1.447 -.590;
+rotate -r -os -fo 18.950 0 -23.812 ;
+
+//Creates back leg
+polyCylinder -r 1 -h 2 -sx 20 -sy 1 -sz 1 -ax 0 1 0 -rcp 0 -cuv 3 -ch 1;
+scale -r .073 .345 .073 ;
+move -r .645  1.447 -.590;
+rotate -r -os -fo 18.950 0 23.812 ;
+
+//Creates stinger
+polyCone -r 1 -h 2 -sx 20 -sy 1 -sz 0 -ax 0 1 0 -rcp 0 -cuv 3 -ch 1;
+move -r .046 2.025 -1.234 ;
+scale -r .175 .383 .175 ;
+rotate -r -os -fo -90.642 0 0 ;
+
+//Creates stripes
+polyTorus -r 1 -sr 0.5 -tw 0 -sx 20 -sy 20 -ax 0 1 0 -cuv 1 -ch 1;
+move -r 0 2.005 -.799 ;
+scale -r .434 .299 .434 ;
+rotate -r -os -fo 90 0 0 ;
+
+polyTorus -r 1 -sr 0.5 -tw 0 -sx 20 -sy 20 -ax 0 1 0 -cuv 1 -ch 1;
+move -r 0 2.005 -.01 ;
+scale -r .586 .427 .586;
+rotate -r -os -fo 90 0 0 ;
+
+polyTorus -r 1 -sr 0.5 -tw 0 -sx 20 -sy 20 -ax 0 1 0 -cuv 1 -ch 1;
+move -r 0 2.005 .604 ;
+scale -r .493 .362 .493 ;
+rotate -r -os -fo 90 0 0 ;
+
