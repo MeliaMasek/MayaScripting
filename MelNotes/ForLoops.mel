@@ -1,0 +1,56 @@
+/* 
+    for loops 
+    intial value 
+    conditon(continue until) 
+    change value 
+*/
+
+
+/* normal for loop
+    for ($value = 1; $value <=100; $value++)
+        {
+            print ($value + "\n");
+        }
+*/
+
+
+/*increments by evens 
+    for ($value = 1; $value <=100; $value = $value + 2)
+*/
+
+/*
+    if ($value % 2 == 0)
+
+        {
+            print ("even" + $value + "\n");
+        }
+
+    else
+    {
+        print ("odd" + $value + "\n");
+    }
+*/
+
+
+/*functions with for loops
+    proc NumberCounter(int $min, int $max)
+        {
+            for ($value = $min; $value <= $max; $value++)
+
+            if ($value % 2 == 0)
+
+                {
+                    print ("even" + $value + "\n");
+                }
+
+            else
+                {
+                    print ("odd" + $value + "\n");
+                }
+        }
+
+    NumberCounter(10, 30);
+        //Input into maya
+        //NumberCounter(startnumber, endnumber);
+*/
+  

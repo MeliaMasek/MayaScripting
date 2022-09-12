@@ -1,0 +1,146 @@
+
+/* Mel Notes
+
+                                    Operators
+
+Artihmetic
+
++ : Addition 
+        1+1 -> 2
+        can be used for strings ("Hello" + "World" -> "Hello World")
+
+- : Subtraction
+        1-1 -> 0
+
+* : Mupltiplication
+        1*2 -> 2
+
+/ : Division
+        50/10 -> 5
+
+++ : Increment (flows right to left, takes number adds one and reasigns the new value)
+        int $num = 10;
+        $num++; -> 11
+
+-- : Decrement (flows right to left, takes number adds subtracts and reasigns the new value)
+        int $num = 10;
+        $num--; -> 9
+
+% : Modulus (returns the reminder of the division operation)
+         13 % 5 -> 3
+
+^ : Power (exponent)
+        3^2 -> 9
+
+Assignment
+
+= : Assignment (right to left)
+        int $num = 5;
+
++= : (Add value to variable and reassign value to variable)
+        int $num = 0;
+        $num = $num + 10;
+        
+        $num += 10;
+
+-= : (Subtract value from variable and reassign value to variable)
+        int $num = 0;
+        $num = $num - 10;
+        
+        $num -= 10;
+
+*= : (Multply value from variable and reassign value to variable)
+        int $num = 0;
+        $num = $num * 10;
+        
+        $num *= 10;
+
+/= : (Divide value from variable and reassign value to variable)
+        int $num = 0;
+        $num = $num / 10;
+        
+        $num /= 10;
+
+%= : ( using the modulus value from variable and reassign value to variable)
+        int $num = 0;
+        $num = $num % 10;
+        
+        $num %= 10;
+
+^= : (Subtract value from variable and reassign value to variable)
+        int $num = 0;
+        $num = $num % 10;
+        
+        $num %= 10;
+
+Comparison : returns true 1 or false 0
+
+== : equal to
+        3 == 5 -> 0
+
+!= : Not equal to
+        3 != 5 -> 1
+
+> : Greater than 
+        3 > 5 -> 0
+
+< : Less than
+        3 < 5 -> 1
+
+>= : Greater than or equal to  
+        3 >= 5 -> 0
+
+<= : Less than
+        5 <= 3 -> 1
+
+Logical : returns true 1 or false 0
+
+&& : and 
+        ( (3 < 4 && (5 > 2) ) -> 1
+
+|| : or 
+        ( (3 < 4 || (5 > 2) ) -> 1
+
+! : not 
+        ( ! (3 < 4) ) -> 0
+
+
+
+
+
+
+
+
+
+
+
+
+*/
+
+
+/*
+ types of variables
+    int (interger)
+    float (float)
+    string (text " ")
+    bool (boolean, True 1/False 0)
+    array (container of multiple values [ ])
+    vector
+*/
+
+int $Number;
+$Number = 27;
+print ($Number);
+
+float $Price;
+
+string $Name;
+$name = "Melia";
+print ($Name)
+
+//bool
+int $Grade;
+
+//array
+float $Position [] = {-8.1, -1.8, 9.4};
+//index                  0     1     2

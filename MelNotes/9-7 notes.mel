@@ -1,0 +1,56 @@
+Maya scripting 
+
+vector 3 ----> not tied to xyz, could be rgb
+
+to select without using select use the variable at the end of the list of flags
+	ex. 
+		string $obj[];
+		move 3 4 5 $obj [0];
+
+Rand command (randomize)
+	can randomize the start number but never the end number	
+
+	ex. rand -50 35; -> 30.12
+	to store use the back ticks
+	ex. `rand -50 35`; -> 30.12 (stores that value)
+
+
+In order to create intergers from the rand command
+	floor (rounds down)
+	sceil (rounds up)
+
+arrays with rand 
+
+//
+string $basket[] = {"apple", "grape", "cherry", "orange", "kiwi"};
+
+int $index; -----> becuase declared as int will return only whole numbers 
+$int = `rand 5`;
+print ($basket[$index]);
+//
+
+arrays with vectors to randomize location 
+
+//
+string $obj[];
+$obj = `polySphere`;
+move 3 4 5 $obj [0];
+//
+
+mirror plane/pivot 
+
+modify-recenter pivot point
+xform -cpc;
+
+naming issues
+
+polySphere -name "placeholdername";
+
+Float issues
+
+
+
+ball Animation rotation
+	ball in group 
+	group for all translations
+	ball child for rotations 

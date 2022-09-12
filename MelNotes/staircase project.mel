@@ -1,0 +1,18 @@
+staircase project
+
+in the function
+	proc staircase (list all variables (order matters later))
+
+define stair parameters with 1 function (proc)
+	length, width, heigth
+	pivot point ( could be 1 or 3 axis)
+	
+duplicating (with a loop of some kind, based on number of stairs)
+	number of stairs
+	move _ units up
+	rotate _ units 
+	
+move and rotate stair by _ units (shift D)
+
+xform command
+	xform -rp _ _ _
