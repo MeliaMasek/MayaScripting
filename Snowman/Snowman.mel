@@ -1,0 +1,193 @@
+//Had a couple issues with extruding and getting it to transfer correctly from the .mel file
+
+// create base sphere
+polySphere -radius 3 -subdivisionsX 20 -subdivisionsY 20 -axis 0 1 0 -createUVs 2 -constructionHistory 1;
+move -relative -objectSpace -worldSpaceDistance 0 3 0;
+
+//create middle sphere
+polySphere -radius 1 -subdivisionsX 20 -subdivisionsY 20 -axis 0 1 0 -createUVs 2 -constructionHistory 1;
+polySphere -e -radius 2;
+move -relative -objectSpace -worldSpaceDistance 0 6.338 0;
+
+//create top sphere
+polySphere -radius 1.4 -subdivisionsX 20 -subdivisionsY 20 -axis 0 1 0 -createUVs 2 -constructionHistory 1;
+move -relative -objectSpace -worldSpaceDistance 0 8.706 0;
+
+//create nose
+polyCone -r 1 -h 2 -sx 20 -sy 1 -sz 0 -ax 0 1 0 -rcp 0 -cuv 3 -ch 1;
+move -relative -objectSpace-worldSpaceDistance 0 8.692 1.822;
+scale -relative .247 .819 .211;
+rotate -r -os -fo 87.594144 0 0 ;
+select -r pCone1.vtx[20] ;
+polyExtrudeVertex -constructionHistory 1 -width 0.5 -length 1 -divisions 1;
+select -r pCone1.vtx[20] ;
+polyExtrudeVertex -constructionHistory 1 -width 0.5 -length 1 -divisions 1;
+dR_paintRelease;
+selectPref -paintSelectRefine 0 -paintSelect 0;
+scale -r -p -7.36117e-09cm 8.72638cm 2.868278cm 1.475371 1.475371 1.475371 ;
+select -r pCone1.vtx[20] ;
+move -r 0 0 -1.367932 ;
+move -r -0.0775075 0 0 ;
+
+//create top hat
+//polyCylinder -radius 1 -height 2 -subdivisionsX 20 -subdivisionsY 1 -subdivisionsZ 1 -axis 0 1 0 -roundCap 0 -createUVs 3 -constructionHistory 1;
+//move -relative -objectSpace-worldSpaceDistance 0 10 0;
+//scale -relative 1.37 0.15 1.37;
+
+//polyCylinder -radius 1 -height 2 -subdivisionsX 20 -subdivisionsY 1 -subdivisionsZ 1 -axis 0 1 0 -roundCap 0 -createUVs 3 -constructionHistory 1;
+//move -relative -objectSpace-worldSpaceDistance 0 10.568 0;
+//scale -relative 1 0.533 1;
+
+//new top hat
+polyCylinder -radius 1 -height 2 -subdivisionsX 20 -subdivisionsY 1 -subdivisionsZ 1 -axis 0 1 0 -roundCap 0 -createUVs 3 -constructionHistory 1;
+move -relative -objectSpace-worldSpaceDistance .276 9.836 0;
+scale -relative 1.37 0.15 1.37;
+dR_paintPress;
+
+selectPref -paintSelectRefine 1 -paintSelect 1;
+select -replace -add pCylinder1.f[40:59] ;
+selectPref -paintSelectRefine 0 -paintSelect 0;
+
+hilite pCylinder1.f[40:59] ;
+selectMode -component ;
+select -r pCylinder1.f[40:59] ;
+polyExtrudeFacet -constructionHistory 1 -keepFacesTogether 1 -pvx -1.633167267e-07 -pvy 10.15000014 -pvz -2.449750901e-07 -divisions 1 -twist 0 -taper 1 -off 0 -thickness 0 -smoothingAngle 30 pCylinder1.f[40:59];
+scale -r -p -1.63317e-07cm 10.15cm -2.44975e-07cm 0.715243 1 0.715243 ;
+select -add pCylinder1.f[40:59] ;
+
+select -r pCylinder1.f[40:59] ;
+polyExtrudeFacet -constructionHistory 1 -keepFacesTogether 1 -pvx -1.633167266e-07 -pvy 10.15000004 -pvz -2.4497509e-07 -divisions 1 -twist 0 -taper 1 -off 0 -thickness 0 -smoothingAngle 30 pCylinder1.f[40:59];
+move -r 0 0.802178 0 ;
+
+select -r pCylinder1 ;
+rotate -r -ws -fo -0.246361 0.527612 -13.210183 ;
+
+//create left eye
+polySphere -radius 1 -subdivisionsX 20 -subdivisionsY 20 -axis 0 1 0 -createUVs 2 -constructionHistory 1;
+move -relative -objectSpace -worldSpaceDistance -0.753 8.929 1.044;
+scale -relative .179 .179 .3;
+
+select -r pSphere4.vtx[0:123] pSphere4.vtx[132:137] pSphere4.vtx[141] pSphere4.vtx[156] pSphere4.vtx[380] ;
+move -r 0 -0.0520768 0 ;
+
+select -r pSphere4.vtx[180:182] pSphere4.vtx[200:203] pSphere4.vtx[216:217] pSphere4.vtx[219:223] pSphere4.vtx[235:243] pSphere4.vtx[254:263] pSphere4.vtx[274:283] pSphere4.vtx[294:303] pSphere4.vtx[314:323] pSphere4.vtx[334:343] pSphere4.vtx[353:363] pSphere4.vtx[373:379] pSphere4.vtx[381] ;
+move -r 0 0.0282508 0 ;
+move -r 0.0659907 0 0 ;
+
+//create right eye
+polySphere -radius 1 -subdivisionsX 20 -subdivisionsY 20 -axis 0 1 0 -createUVs 2 -constructionHistory 1;
+move -relative -objectSpace -worldSpaceDistance .681 9.03 1.046;
+scale -relative .187 .187 .187;
+
+move -r 0.0457955 0 0 ;
+select -r pSphere5.vtx[167:172] pSphere5.vtx[187:193] pSphere5.vtx[206:214] pSphere5.vtx[226:234] pSphere5.vtx[245:255] pSphere5.vtx[265:275] pSphere5.vtx[284:296] pSphere5.vtx[303:317] pSphere5.vtx[320:379] pSphere5.vtx[381] ;
+move -r 0 0.0471034 0 ;
+move -r -0.0725755 0 0 ;
+select -r pSphere5.vtx[0:19] pSphere5.vtx[23:37] pSphere5.vtx[44:56] pSphere5.vtx[65:75] pSphere5.vtx[85:95] pSphere5.vtx[106:115] pSphere5.vtx[126:134] pSphere5.vtx[146] pSphere5.vtx[148:154] pSphere5.vtx[380] ;
+move -r 0 -0.0435203 0 ;
+move -r -0.0726662 0 0 ;
+select -r pSphere5.vtx[0] ;
+select -d pSphere5.vtx[0] ;
+move -r 0 0 0.299292 ;
+
+//button 1
+polySphere -radius 1 -subdivisionsX 20 -subdivisionsY 20 -axis 0 1 0 -createUVs 2 -constructionHistory 1;
+move -relative -objectSpace -worldSpaceDistance .047 7.314 1.684;
+scale -relative .271 .271 .271;
+rotate -r -os -fo -24.342 0 0 ;
+
+select -d pSphere6.e[391] pSphere6.e[411] pSphere6.e[431] pSphere6.e[451] pSphere6.e[471] pSphere6.e[491] pSphere6.e[511] pSphere6.e[531] pSphere6.e[551] pSphere6.e[571] pSphere6.e[591] pSphere6.e[611] pSphere6.e[631] pSphere6.e[651] pSphere6.e[671] pSphere6.e[691] pSphere6.e[711] pSphere6.e[731] pSphere6.e[751] pSphere6.e[771] ;
+dR_paintPress;
+selectPref -paintSelectRefine 1 -paintSelect 1;
+select -add pSphere6.f[173] pSphere6.f[193] pSphere6.f[213] pSphere6.f[233] ;
+select -add pSphere6.f[153] ;
+select -add pSphere6.f[155] pSphere6.f[175] pSphere6.f[195] pSphere6.f[215] pSphere6.f[235] ;
+dR_paintRelease;
+selectPref -paintSelectRefine 0 -paintSelect 0;
+dR_paintPress;
+selectPref -paintSelectRefine 1 -paintSelect 1;
+select -add pSphere6.f[172] pSphere6.f[192] pSphere6.f[212] pSphere6.f[232] ;
+select -add pSphere6.f[152] ;
+select -d pSphere6.f[153] pSphere6.f[173] pSphere6.f[193] pSphere6.f[213] pSphere6.f[233] ;
+dR_paintRelease;
+selectPref -paintSelectRefine 0 -paintSelect 0;
+hilite pSphere6.f[152] pSphere6.f[155] pSphere6.f[172] pSphere6.f[175] pSphere6.f[192] pSphere6.f[195] pSphere6.f[212] pSphere6.f[215] pSphere6.f[232] pSphere6.f[235] ;
+selectMode -component ;
+select -r pSphere6.f[152] pSphere6.f[155] pSphere6.f[172] pSphere6.f[175] pSphere6.f[192] pSphere6.f[195] pSphere6.f[212] pSphere6.f[215] pSphere6.f[232] pSphere6.f[235] ;
+polyExtrudeFacet -constructionHistory 1 -keepFacesTogether 1 -pvx 0.04699998385 -pvy 7.406510547 -pvz 1.7817232 -divisions 1 -twist 0 -taper 1 -off 0 -thickness 0 -smoothingAngle 30 pSphere6.f[152] pSphere6.f[155] pSphere6.f[172] pSphere6.f[175] pSphere6.f[192] pSphere6.f[195] pSphere6.f[212] pSphere6.f[215] pSphere6.f[232] pSphere6.f[235];
+move -r 0 0 -0.045778 ;
+
+//button 2
+polySphere -radius 1 -subdivisionsX 20 -subdivisionsY 20 -axis 0 1 0 -createUVs 2 -constructionHistory 1;
+move -relative -objectSpace -worldSpaceDistance .047 6.28 1.904;
+scale -relative .271 .271 .271;
+rotate -r -os -fo -2.344 0 0 ;
+
+dR_paintPress;
+selectPref -paintSelectRefine 1 -paintSelect 1;
+select -add pSphere7.f[133] pSphere7.f[153] pSphere7.f[173] pSphere7.f[193] pSphere7.f[213] ;
+select -add pSphere7.f[135] pSphere7.f[155] pSphere7.f[175] pSphere7.f[195] pSphere7.f[215] ;
+dR_paintRelease;
+selectPref -paintSelectRefine 0 -paintSelect 0;
+dR_paintPress;
+selectPref -paintSelectRefine 1 -paintSelect 1;
+select -add pSphere7.f[132] pSphere7.f[152] pSphere7.f[172] pSphere7.f[192] pSphere7.f[212] ;
+select -d pSphere7.f[133] pSphere7.f[153] pSphere7.f[173] pSphere7.f[193] pSphere7.f[213] ;
+dR_paintRelease;
+selectPref -paintSelectRefine 0 -paintSelect 0;
+hilite pSphere7.f[132] pSphere7.f[135] pSphere7.f[152] pSphere7.f[155] pSphere7.f[172] pSphere7.f[175] pSphere7.f[192] pSphere7.f[195] pSphere7.f[212] pSphere7.f[215] ;
+selectMode -component ;
+select -r pSphere7.f[132] pSphere7.f[135] pSphere7.f[152] pSphere7.f[155] pSphere7.f[172] pSphere7.f[175] pSphere7.f[192] pSphere7.f[195] pSphere7.f[212] pSphere7.f[215] ;
+polyExtrudeFacet -constructionHistory 1 -keepFacesTogether 1 -pvx 0.04699998385 -pvy 6.269637883 -pvz 2.131155796 -divisions 1 -twist 0 -taper 1 -off 0 -thickness 0 -smoothingAngle 30 pSphere7.f[132] pSphere7.f[135] pSphere7.f[152] pSphere7.f[155] pSphere7.f[172] pSphere7.f[175] pSphere7.f[192] pSphere7.f[195] pSphere7.f[212] pSphere7.f[215];
+move -r 0 0 -0.0840336 ;
+
+//Scarf
+polyTorus -r 1 -sr 0.5 -tw 0 -sx 20 -sy 20 -ax 0 1 0 -cuv 1 -ch 1;
+move -r 0 7.824 0 ;
+scale -relative .985 .722 .985;
+
+select -tgl pTorus1.f[190] ;
+select -tgl pTorus1.f[191] ;
+select -tgl pTorus1.f[210] ;
+select -tgl pTorus1.f[211] ;
+hilite pTorus1.f[190:191] pTorus1.f[210:211] ;
+selectMode -component ;
+select -r pTorus1.f[190:191] pTorus1.f[210:211] ;
+polyExtrudeFacet -constructionHistory 1 -keepFacesTogether 1 -pvx -1.129735541 -pvy 7.824427 -pvz 0.8222235508 -divisions 1 -twist 0 -taper 1 -off 0 -thickness 0 -smoothingAngle 30 pTorus1.f[190:191] pTorus1.f[210:211];
+setAttr "polyExtrudeFace5.localTranslate" -type double3 0 0 0.23594 ;
+setAttr "polyExtrudeFace5.localTranslate" -type double3 0 -0.195867 0.23594 ;
+select -r pTorus1.f[190] ;
+select -tgl pTorus1.f[191] ;
+select -tgl pTorus1.f[211] ;
+select -tgl pTorus1.f[210] ;
+select -r pTorus1.f[190:191] pTorus1.f[210:211] ;
+polyExtrudeFacet -constructionHistory 1 -keepFacesTogether 1 -pvx -1.314112051 -pvy 7.64204224 -pvz 0.9330642436 -divisions 1 -twist 0 -taper 1 -off 0 -thickness 0 -smoothingAngle 30 pTorus1.f[190:191] pTorus1.f[210:211];
+setAttr "polyExtrudeFace6.localTranslate" -type double3 0 0 0.354234 ;
+setAttr "polyExtrudeFace6.localTranslate" -type double3 0 -0.281266 0.354234 ;
+select -r pTorus1 ;
+select -tgl pTorus1.f[410] ;
+select -tgl pTorus1.f[402] ;
+select -tgl pTorus1.f[400] ;
+select -tgl pTorus1.f[408] ;
+select -tgl pTorus1.f[190] ;
+select -tgl pTorus1.f[191] ;
+select -tgl pTorus1.f[411] ;
+select -tgl pTorus1.f[403] ;
+select -tgl pTorus1.f[401] ;
+select -tgl pTorus1.f[409] ;
+move -r 0 -0.0820568 0 ;
+select -r pTorus1.vtx[410] ;
+move -r 0 0 -0.144975 ;
+
+//Right arm
+polyCylinder -radius 1 -height 2 -subdivisionsX 20 -subdivisionsY 1 -subdivisionsZ 1 -axis 0 1 0 -roundCap 0 -createUVs 3 -constructionHistory 1;
+move -relative -objectSpace -worldSpaceDistance 2.352 7.339 0;
+scale -relative .152 1.006 .152;
+rotate -r -os -fo 0 0 -48.154;
+
+//Left arm
+polyCylinder -radius 1 -height 2 -subdivisionsX 20 -subdivisionsY 1 -subdivisionsZ 1 -axis 0 1 0 -roundCap 0 -createUVs 3 -constructionHistory 1;
+move -relative -objectSpace -worldSpaceDistance -2.352 7.339 0;
+scale -relative -.152 -1.006 -.152;
+rotate -r -os -fo 0 0 48.154;
+
