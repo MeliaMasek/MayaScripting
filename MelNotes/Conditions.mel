@@ -1,0 +1,82 @@
+                                //conditions//
+
+//if statement
+    if (5 > 3)
+        {
+            print ("True\n");
+        }
+
+//else statement 
+    else 
+        {
+            print ("False\n");
+        }
+
+
+string $name = "Mark";
+
+//if statement
+    if ($name == "Melia")
+        {
+            print ("Hello Melia!\n");
+        }
+
+//else statement 
+    else if ($name == "Mark")
+        {
+            print ("This is Mark!\n");
+        }
+
+    else 
+        {
+            print ("Hello NPC " + $name + ", This is the world!\n");
+        }
+
+/*for loop
+for (statement 1; statement 2; statement 3;)    
+statement 1 - executed one time before code block, establish a base    
+statement 2 - define a condition 
+statement 3 - executed everytime after the code block  
+*/    
+    for ($i = 0; $i < 5; $i++)
+        {
+            print ( $i + "Hi!\n");
+        }
+
+    print ("Done Loop");
+
+//while loop
+    int $i = 0;
+    
+    while ($i < 10)
+        {
+            print ( $i + "\n");
+            $i +=2;
+        }
+
+//do while loop
+    $i = 0;
+    
+    do
+        {
+            print ( $i + "\n");
+            $i ++;
+        }
+    
+    while ($i < 10);
+
+//example of loops 
+    string $people[] = {"Tim", "Mark", "Mary", "Penelope"};
+        //array index     0    1     2        3
+        //size($people) => 4
+    for ($i = 0; $i < size($people); $i++)
+        {
+            print("Hello " + $people[$i] + "! This is code!\n");
+        }
+
+//functions
+    proc Test()
+        {
+            print ("Hello World!\n");
+        }
+    Test();
