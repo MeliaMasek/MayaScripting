@@ -80,3 +80,12 @@ statement 3 - executed everytime after the code block
             print ("Hello World!\n");
         }
     Test();
+
+//example of functions, order matters when calling functions, left to right
+    proc SayHello(string $name, int $age)
+        {
+            print ("Hello" + $name "! Welcome to Maya!\n");
+            print ("Happy Birthday! You're " + $age + " years old\n");
+        }
+    SayHello(string $name, int $age);
+//the $name string is the changable name in maya, same with age
