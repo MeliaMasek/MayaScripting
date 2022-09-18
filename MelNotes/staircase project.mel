@@ -16,3 +16,11 @@ move and rotate stair by _ units (shift D)
 
 xform command
 	xform -rp _ _ _
+
+Number of stairs to be created
+Stair length
+Stair width
+Stair height
+Stair pivot point or offset
+Step height
+Step rotation

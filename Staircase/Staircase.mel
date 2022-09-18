@@ -1,0 +1,12 @@
+proc Staircase(int $Count, float $Width, float $Height, float $Length, float $Pivot, float $Sheight, float $Srotation)
+    {
+        for ($i = 0; $i < $Count; $i++)
+        {
+            polyCube -width $Width -height $Height -depth $Length -subdivisionsX 1 -subdivisionsY 1 -subdivisionsZ 1 -axis 0 20 0 -createUVs 4 -constructionHistory 1;
+            move -r 0 ($Sheight*$i) 0;
+            scale -r 7.25 5 10;
+            xform -rotatePivot $Pivot 0 0;
+            rotate -r -os -fo 0 ($Srotation*$i) 0;
+        } 
+    }
+Staircase(18, 1, .25, .25, 5, 1, 20)
