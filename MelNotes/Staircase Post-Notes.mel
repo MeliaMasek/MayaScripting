@@ -1,0 +1,70 @@
+Staircase Post-Notes
+ 
+ //Selects the last created object and assigns it to a variable 
+ 
+    global string $LastObj;
+
+    for ($i = 0; $i < 10; $i++)
+            {
+                string $obj[];
+                    //Creating the array for the created object
+                $obj = `polyCube`;
+                    //Storing the created object 
+                $LastObj = $obj[0];
+                    //recalling the Objectname
+                `rename $LastObj ("Stair_" + ($i+1))`;
+                    //Stores the created object 
+                scale -r -p .5cm 0cm 0cm 0cm .50 0 .50 .50 ($LastObj + /*face.#*/);
+                    //Scales a selected face without needing to know the objectnumber
+            }
+    print ($LastObj);
+    select -replace $LastObj;
+
+
+    //Using xform, rotate, and getAttr/setAttr 
+        //Multiple ways to do the same thing 
+    
+        //xform, can be used for rotations and pivots
+            xform -relative -objectSpace -rotation 0 15 0 "pCube1";
+                //relative transformation, will rotate 15 each time called
+
+        //rotate
+            rotate -r -os -fo 0 15 0 "pCube1";
+                //relative transformation, will rotate 15 each time called
+
+        //getAttr and setAttr
+            float $rotY;
+            $rotY = `getAttr "pCube1.rotateY"`;
+            setAttr "PCube1.rotateY" ($rotY + 15);
+            rotate -r -os -fo 0 $rotY 0 "pCube1";
+
+
+//Changing the height of the stairs
+    float $posHeight = 0;
+    float $rotation = 0;
+
+    for ($i = 0; $i < 10; $i++)
+    {
+        string $obj[];
+            //Creating the array for the created object
+        $obj = `polyCube`;
+            //Storing the created object 
+        $LastObj = $obj[0];
+            //recalling the Objectname
+        $LastObj = `rename $LastObj ("Stair_" + ($i+1))`;
+            //Stores the created object 
+
+        xform -r -os -translation 0 $posHeight 0 $LastObj;
+        xform -r -os -rotation 0 $posHeight 0 $LastObj;
+
+    /*dont hardcode the numbers but call on the previous variables used*/
+        $posHeight += 1; 
+        $rotation  += 10;
+    }
+
+    //Creating rail/styles for the staircase 
+        /*  another if statement for the bars, use the units of the stair to figure out where to put the bar at the corner
+                (w/2) - (d/2)
+                (d/2) - (d/2)
+            for the rail use nurvs(like the path tool in illus.) find the top of the bar and put a snap point for the nurv to follow 
+        */
