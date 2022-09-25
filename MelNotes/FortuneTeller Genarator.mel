@@ -1,0 +1,116 @@
+                    // A fourtune teller function //
+
+//Lottery Number - generates random lottery number
+global proc string LotteryNumber()
+{
+    int $values[];
+    
+    for ($i = 0; $i < 7; $i++)
+    {
+        int $num = `rand 100`;
+        $values[size($values)] = $num;
+    }
+    return (intArrayToString($values, " - "));
+}
+//print (LotteryNumber());
+
+
+//Best Friend - generates a new best friend name
+global proc BestFriend(string $name)
+    {
+        string $names[] = {"Dave", "Doug", "Clarence", "Mary", "Jane", "Phil", "Tina"};
+        int $size = size($names);
+        int $randNum = `rand $size`;
+    
+        print ($name + ", Your new best friend will be named " + $names[$randNum] + "!\n");
+    }
+//BestFriend();
+
+
+//Fortune - generates a fortune
+global proc Fortune()
+{
+    string $fortune[] = {"Keep your eye out for someone special.", "If you feel you are right, stand firmly by your convictions.", "Joys are often the shadows, cast by sorrows.", "Wealth awaits you very soon.", "The greatest risk is not taking one."};
+    int $randNum = `rand (size($fortune))`;
+
+    print ($fortune[$randNum] + "\n");
+}
+//Fortune();
+
+
+//Zodiac Sign - generates a chinese zodiac sign, one way to solve
+/*
+global proc string Zodiac(int $birthYear)
+{
+    int $sign = ($birthYear - 4) % 12;
+
+    if ($sign == 0)
+        print ("Rat");
+    else if ($sign == 1)
+        print ("Ox");
+    else if ($sign == 2)
+        print ("Tiger");
+    else if ($sign == 3)
+        print ("Rabbit");
+    else if ($sign == 4)
+        print ("Dragon");
+    else if ($sign == 5)
+        print ("Snake");
+    else if ($sign == 6)
+        print ("Horse");
+    else if ($sign == 7)
+        print ("Sheep");
+    else if ($sign == 8)
+        print ("Monkey");
+    else if ($sign == 9)
+        print ("Rooster");
+    else if ($sign == 10)
+        print ("Dog");
+    else
+        print ("Pig");
+}
+print (Zodiac(1999));
+*/
+
+
+//Zodiac Sign - generates a chinese zodiac sign, this is simpler
+global proc string Zodiac(int $birthYear)
+{
+    string $signs[] = {"Rat", "Ox", "Tiger", "Rabbit", "Dragon", "Snake", "Horse", "Sheep", "Monkey", "Rooster", "Dog"};
+    int $index = ($birthYear - 4) % 12;
+
+    return $signs[$index];
+}
+//print (Zodiac(1999));
+
+
+//Calls on all functions
+global proc FortuneTeller(string $myName, int $myBirthYear, int $operation)
+{
+    if ($operation == 1)
+    {
+        print ("Your lucky numers for today are: " + LotteryNumber() + "\n");
+    }
+    
+    else if ($operation == 2 )
+    {
+        BestFriend($myName);
+    }
+    
+    else if ($operation == 3)
+    {
+        Fortune();
+    }
+    
+    else if ($operation == 4)
+    {
+        print ("Based on your birth year, " + $myBirthYear + ", your zodiac sign is " + Zodiac($myBirthYear) + ". \n");
+    }
+    
+    else
+    {
+        print ("Please input a valid operation type as a value, 1 though 4.");
+    }
+}
+FortuneTeller("Melia", 1999, 1);
+
