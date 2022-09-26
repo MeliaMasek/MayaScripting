@@ -1,74 +1,79 @@
                         //Calculator function
 
 //Addition 1
-global proc Addition(float $num1, float $num2, float $num3)
+global proc float Addition(float $num1, float $num2, float $num3)
 {
     float $add[] = {$num1, $num2, $num3};
     print (floatArrayToString($add, " + "));
     print (" = ");
     print ($num1 + $num2 + $num3);
     print ("\n");
-
+    return ($num1 + $num2 + $num3);
 }
 print (Addition(70, 1, 1));
 
 
 //Subtraction 2
-global proc Subtraction(float $num1, float $num2, float $num3)
+global proc float Subtraction(float $num1, float $num2, float $num3)
 {
     float $sub[] = {$num1, $num2, $num3};
     print (floatArrayToString($sub, " - "));
     print (" = ");
     print ($num1 - $num2 - $num3);
     print ("\n");
+    return ($num1 - $num2 - $num3);
 }
 print (Subtraction(25, 5, 5));
 
 
 //Multiplication 3
-global proc Multiplication(float $num1, float $num2, float $num3)
+global proc float Multiplication(float $num1, float $num2, float $num3)
 {
     float $multi[] = {$num1, $num2, $num3};
     print (floatArrayToString($multi, " * "));
     print (" = ");
     print ($num1 * $num2 * $num3);
     print ("\n");
+    return ($num1 * $num2 * $num3);
 }
 print (Multiplication(5, 5, 1));
 
 
 //Division 4
-global proc Division(float $num1, float $num2, float $num3)
+global proc float Division(float $num1, float $num2, float $num3)
 {
     float $div[] = {$num1, $num2, $num3};
     print (floatArrayToString($div, " / "));
     print (" = ");
     print ($num1 / $num2 / $num3);
     print ("\n");
+    return ($num1 / $num2 / $num3);
 }
 print (Division(25, 5, 1));
 
 
 //Power 5
-global proc Power(float $num1, float $num2)
+global proc float Power(float $num1, float $num2)
 {
     float $powof = pow($num1, $num2);
     print ($num1 + " ^ " + $num2);
     print (" = ");
     print $powof;
     print ("\n");
+    return($powof);
 }
 print (Power(3, 2));
 
 
 //Mean 6
-global proc Mean(float $num1, float $num2, float $num3, float $num4)
+global proc float Mean(float $num1, float $num2, float $num3, float $num4)
 {
     float $mean[] = {$num1, $num2, $num3, $num4};
     print (floatArrayToString($mean, " + "));
     print (" = ");
     print (($num1 + $num2 + $num3 + $num4) / 4);
     print ("\n");
+    return(($num1 + $num2 + $num3 + $num4) / 4);
 }
 print (Mean(40, 10, 50, 140));
 
@@ -78,15 +83,15 @@ global proc Median(float $num1, float $num2, float $num3, float $num4, float $nu
 {
     float $med[] = {$num1, $num2, $num3, $num4, $num5};
     print (sort($med));
+    float $med2[] = (sort($med));
     print ("The median of the inputed numbers is ");
-    //print (sort());
+    print ($med2[2]);
     print ("\n");
 }
 print (Median(10, 1, 50, 25, 15));
 
 
 //Calls on all functions
-
 global proc Calculator(int $operation)
 {
     if ($operation == 1)
