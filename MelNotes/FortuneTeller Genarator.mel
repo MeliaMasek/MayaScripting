@@ -24,7 +24,7 @@ global proc BestFriend(string $name)
     
         print ($name + ", Your new best friend will be named " + $names[$randNum] + "!\n");
     }
-//BestFriend();
+//BestFriend("Melia");
 
 
 //Fortune - generates a fortune

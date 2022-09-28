@@ -1,0 +1,70 @@
+                         Post Calculator Notes
+
+//Backticks
+`rand 10`
+    needs backticks, not a function
+rand (10)
+    doesnt need backticks, is a function
+
+
+//not indivudal variables, instead one array to input as many as needed
+//size command -> looks at the number of indexs in the array
+//for arrays only need the [] when specifing the array or referencing an index
+global proc float Addition(float $numbers[])
+{
+    float $sum = 0;
+
+    //$i = $index in this case
+    for ($index = 0; $index < size($numbers); $index++)
+    {
+        $sum = $sum + $numbers[$index];
+        //$sum += $numbers[$index]; -> same thing as above, just cleaner
+    //print ($sum);       
+    }
+    return $sum;
+}
+Addition({10, 50, 1});
+//Addition({10, 10} + {1, 2});
+
+
+global proc float Subtraction(float $numbers[])
+{
+    float $difference = $numbers[0];
+
+    //$i = $index in this case
+    for ($index = 1; $index < size($numbers); $index++)
+    {
+        $difference = $difference + $numbers[$index];
+        //$sum -= $numbers[$index]; -> same thing as above, just cleaner   
+    }
+    return $difference;
+}
+Subtraction({10, 50, 1});
+
+
+global proc float Calculator(float $input[], int $operation)
+{
+    float $result;
+    string $operationSymbol;
+
+    //perform addition
+    if ($operation == 1)
+    {
+        $result = Addition($input);
+        $operationSymbol = "+";
+    }
+    else if ($operation == 2)
+    {
+        $result = Subtraction($input);
+        $operationSymbol = "-";
+    }
+    
+    //pretty print result 
+    string $sentence;
+    $sentence = "The result of ";
+    $sentence += floatarraytostring($input, $operationSymbol);
+    $sentence += " = " + $result + "\n";
+    print ($sentence);
+    return ($result);
+}
+Calculator({1, 0, 2}, 1);

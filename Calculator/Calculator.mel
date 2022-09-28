@@ -1,94 +1,267 @@
                         //Calculator function
 
 //Addition 1
-global proc Addition(float $num1, float $num2, float $num3)
+global proc float Addition(float $num[])
 {
+        float $sum = 0;
+
+    //$i = $index in this case
+    for ($index = 0; $index < size($num); $index++)
+    {
+        $sum = $sum + $num[$index];
+    }
+    return $sum;
+    
+    /*
+    global proc float Addition(float $num1, float $num2, float $num3)
     float $add[] = {$num1, $num2, $num3};
     print (floatArrayToString($add, " + "));
     print (" = ");
     print ($num1 + $num2 + $num3);
     print ("\n");
-
+    return ($num1 + $num2 + $num3);
+    */
 }
-print (Addition(70, 1, 1));
+Addition({10, 50, 1, 3});
 
 
 //Subtraction 2
-global proc Subtraction(float $num1, float $num2, float $num3)
+global proc float Subtraction(float $num[])
 {
+    float $dif = $num[0];
+
+    //$i = $index in this case
+    for ($index = 1; $index < size($num); $index++)
+    {
+        $dif = $dif - $num[$index];
+    }
+    return $dif;
+    
+    /*
+    global proc float Subtraction(float $num1, float $num2, float $num3)
     float $sub[] = {$num1, $num2, $num3};
     print (floatArrayToString($sub, " - "));
     print (" = ");
     print ($num1 - $num2 - $num3);
     print ("\n");
+    return ($num1 - $num2 - $num3);
+    */
 }
-print (Subtraction(25, 5, 5));
+Subtraction({10, 5, 1});
 
 
 //Multiplication 3
-global proc Multiplication(float $num1, float $num2, float $num3)
+global proc float Multiplication(float $num[])
 {
+    float $multi = $num[0];
+
+    //$i = $index in this case
+    for ($index = 1; $index < size($num); $index++)
+    {
+        $multi = $multi * $num[$index];
+    }
+    return $multi;
+        
+    /*
+    global proc float Multiplication(float $num1, float $num2, float $num3)
     float $multi[] = {$num1, $num2, $num3};
     print (floatArrayToString($multi, " * "));
     print (" = ");
     print ($num1 * $num2 * $num3);
     print ("\n");
+    return ($num1 * $num2 * $num3);
+    */
 }
-print (Multiplication(5, 5, 1));
+Multiplication({2, 3, 7, 2});
 
 
 //Division 4
-global proc Division(float $num1, float $num2, float $num3)
+global proc float Division(float $num[])
 {
+    float $div = $num[0];
+
+    //$i = $index in this case
+    for ($index = 1; $index < size($num); $index++)
+    {
+        $div = $div / $num[$index];
+    }
+    return $div;
+   
+   /*
+    global proc float Division(float $num1, float $num2, float $num3)
     float $div[] = {$num1, $num2, $num3};
     print (floatArrayToString($div, " / "));
     print (" = ");
     print ($num1 / $num2 / $num3);
     print ("\n");
+    return ($num1 / $num2 / $num3);
+    */
 }
-print (Division(25, 5, 1));
+Division({50, 5, 2});
 
 
 //Power 5
-global proc Power(float $num1, float $num2)
+global proc float Power(float $num[])
 {
+    float $powof = $num[0];
+
+    //$i = $index in this case
+    for ($index = 1; $index < size($num); $index++)
+    {
+        $powof = pow($powof, $num[$index]);
+    }
+    return $powof;    
+    
+    /*
+    global proc float Power(float $num1, float $num2)
     float $powof = pow($num1, $num2);
     print ($num1 + " ^ " + $num2);
     print (" = ");
     print $powof;
     print ("\n");
+    return($powof);
+    */
 }
-print (Power(3, 2));
+Power({3, 3});
 
 
 //Mean 6
-global proc Mean(float $num1, float $num2, float $num3, float $num4)
+global proc float Mean(float $num[])
 {
+    float $mean = 0;
+
+    //$i = $index in this case
+    for ($index = 0; $index < size($num); $index++)
+    {
+        $mean = ($mean + $num[$index]);
+    }
+    $mean = $mean / $index;
+    return $mean;
+
+    /*
+    global proc float Mean(float $num1, float $num2, float $num3, float $num4)
     float $mean[] = {$num1, $num2, $num3, $num4};
     print (floatArrayToString($mean, " + "));
     print (" = ");
     print (($num1 + $num2 + $num3 + $num4) / 4);
     print ("\n");
+    return(($num1 + $num2 + $num3 + $num4) / 4);
+    */
 }
-print (Mean(40, 10, 50, 140));
+Mean({10, 5, 5, 4});
 
 
 //Median 7
-global proc Median(float $num1, float $num2, float $num3, float $num4, float $num5)
+global proc float Median(float $num[])
 {
+    float $med[] = (sort($num));
+    print (size($med) + "\n");
+
+    //odds
+    $test = fmod (size($med), 2);
+    if ($test == 1)
+    {
+        $index = ((size($med) / 2));
+        return $med[$index];
+    }
+
+    //even
+    else
+    {
+        return (0);
+    }
+
+    /*    
+    global proc Median(float $num1, float $num2, float $num3, float $num4, float $num5)
     float $med[] = {$num1, $num2, $num3, $num4, $num5};
     print (sort($med));
+    float $med2[] = (sort($med));
     print ("The median of the inputed numbers is ");
-    //print (sort());
+    print ($med2[2]);
     print ("\n");
+    */
 }
-print (Median(10, 1, 50, 25, 15));
-
+Median({10, 1, 50, 10, 10});
+         
 
 //Calls on all functions
-
-global proc Calculator(int $operation)
 {
+global proc float Calculator(float $input[], int $operation)
+{
+    float $result;
+    string $operationSymbol;
+
+    //perform addition
+    if ($operation == 1)
+    {
+        $result = Addition($input);
+        $operationSymbol = " + ";
+    }
+    
+    //perform subtraction
+    else if ($operation == 2)
+    {
+        $result = Subtraction($input);
+        $operationSymbol = " - ";
+    }
+
+    //perform multiplication
+    else if ($operation == 3)
+    {
+        $result = Multiplication($input);
+        $operationSymbol = " * ";
+    }
+
+    //perform division
+    else if ($operation == 4)
+    {
+        $result = Division($input);
+        $operationSymbol = " / ";
+    }
+
+    //perform power of
+    else if ($operation == 5)
+    {
+        $result = Power($input);
+        $operationSymbol = " ^ ";
+    }
+    
+    //perform Mean
+    else if ($operation == 6)
+    {
+        $result = Mean($input);
+        $operationSymbol = ", ";
+        //$sentence = "The mode of ";
+
+    }
+
+    //perform Median
+    else if ($operation == 7)
+    {
+        $result = Median($input);
+        $operationSymbol = " and ";
+        //$sentence = "The median of ";
+    }
+   
+    else
+    {
+        print ("Please input a valid operation type as a value, 1 though 7.");
+    }
+
+    //pretty print result 
+    string $sentence;
+    $sentence = "The result of ";
+    $sentence += (floatArrayToString($input, $operationSymbol));
+    $sentence += " = " + $result + "\n";
+    print ($sentence);
+    return ($result);
+}
+}
+Calculator({1, 0, 2}, 6);
+
+/*
+global proc Calculator(int $operation)
+
     if ($operation == 1)
     {
         Addition(2, 2, 1);
@@ -128,5 +301,5 @@ global proc Calculator(int $operation)
     {
         print ("Please input a valid operation type as a value, 1 though 7.");
     }
-}
-Calculator(7);
+    Calculator(1);
+*/
