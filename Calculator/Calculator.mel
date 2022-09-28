@@ -1,11 +1,7 @@
                         //Calculator function
 
 //Addition 1
-<<<<<<< HEAD
 global proc float Addition(float $num[])
-=======
-global proc float Addition(float $num1, float $num2, float $num3)
->>>>>>> main
 {
         float $sum = 0;
 
@@ -24,20 +20,13 @@ global proc float Addition(float $num1, float $num2, float $num3)
     print ($num1 + $num2 + $num3);
     print ("\n");
     return ($num1 + $num2 + $num3);
-<<<<<<< HEAD
     */
-=======
->>>>>>> main
 }
 Addition({10, 50, 1, 3});
 
 
 //Subtraction 2
-<<<<<<< HEAD
 global proc float Subtraction(float $num[])
-=======
-global proc float Subtraction(float $num1, float $num2, float $num3)
->>>>>>> main
 {
     float $dif = $num[0];
 
@@ -56,20 +45,13 @@ global proc float Subtraction(float $num1, float $num2, float $num3)
     print ($num1 - $num2 - $num3);
     print ("\n");
     return ($num1 - $num2 - $num3);
-<<<<<<< HEAD
     */
-=======
->>>>>>> main
 }
 Subtraction({10, 5, 1});
 
 
 //Multiplication 3
-<<<<<<< HEAD
 global proc float Multiplication(float $num[])
-=======
-global proc float Multiplication(float $num1, float $num2, float $num3)
->>>>>>> main
 {
     float $multi = $num[0];
 
@@ -88,20 +70,13 @@ global proc float Multiplication(float $num1, float $num2, float $num3)
     print ($num1 * $num2 * $num3);
     print ("\n");
     return ($num1 * $num2 * $num3);
-<<<<<<< HEAD
     */
-=======
->>>>>>> main
 }
 Multiplication({2, 3, 7, 2});
 
 
 //Division 4
-<<<<<<< HEAD
 global proc float Division(float $num[])
-=======
-global proc float Division(float $num1, float $num2, float $num3)
->>>>>>> main
 {
     float $div = $num[0];
 
@@ -120,20 +95,13 @@ global proc float Division(float $num1, float $num2, float $num3)
     print ($num1 / $num2 / $num3);
     print ("\n");
     return ($num1 / $num2 / $num3);
-<<<<<<< HEAD
     */
-=======
->>>>>>> main
 }
 Division({50, 5, 2});
 
 
 //Power 5
-<<<<<<< HEAD
 global proc float Power(float $num[])
-=======
-global proc float Power(float $num1, float $num2)
->>>>>>> main
 {
     float $powof = $num[0];
 
@@ -152,20 +120,13 @@ global proc float Power(float $num1, float $num2)
     print $powof;
     print ("\n");
     return($powof);
-<<<<<<< HEAD
     */
-=======
->>>>>>> main
 }
 Power({3, 3});
 
 
 //Mean 6
-<<<<<<< HEAD
 global proc float Mean(float $num[])
-=======
-global proc float Mean(float $num1, float $num2, float $num3, float $num4)
->>>>>>> main
 {
     float $mean = 0;
 
@@ -185,10 +146,7 @@ global proc float Mean(float $num1, float $num2, float $num3, float $num4)
     print (($num1 + $num2 + $num3 + $num4) / 4);
     print ("\n");
     return(($num1 + $num2 + $num3 + $num4) / 4);
-<<<<<<< HEAD
     */
-=======
->>>>>>> main
 }
 Mean({10, 5, 5, 4});
 
@@ -227,7 +185,6 @@ Median({10, 1, 50, 10, 10});
          
 
 //Calls on all functions
-<<<<<<< HEAD
 {
 global proc float Calculator(float $input[], int $operation)
 {
@@ -303,8 +260,6 @@ global proc float Calculator(float $input[], int $operation)
 Calculator({1, 0, 2}, 6);
 
 /*
-=======
->>>>>>> main
 global proc Calculator(int $operation)
 
     if ($operation == 1)
