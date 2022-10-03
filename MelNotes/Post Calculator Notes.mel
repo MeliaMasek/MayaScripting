@@ -53,6 +53,7 @@ global proc float Calculator(float $input[], int $operation)
         $result = Addition($input);
         $operationSymbol = "+";
     }
+    //perform subtraction
     else if ($operation == 2)
     {
         $result = Subtraction($input);

@@ -1,0 +1,17 @@
+/*
+to save UI to on start up maya
+    documents -> maya -> scripts -> save as 
+    in the maya mel window use the source command with the file name after
+                        ex. source "file name"
+        may need to use the evalDefferred command instead 
+                        ex. evalDeferred ("source "file name")
+            then put line of code into the user set up of maya
+*/
+
+/*
+to dock the code select all the code and then middle click and drag to the top bar to dock
+    can also edit the icon preview and other things
+*/
+
+
+

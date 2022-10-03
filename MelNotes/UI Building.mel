@@ -1,0 +1,58 @@
+//using functions
+
+global proc Add()
+{
+    float $sum = 5 + 5;
+    print ("the sum is " + $sum);
+}
+
+global proc WhatsInFloatField()
+{
+    print (`floatField -q -value "myFloatFieldTest"`);
+}
+
+string $mainWindow = "test_window";
+
+if (`window -exists $mainWindow`)
+    deleteUI $mainWindow;
+
+$mainWindow = `window 
+                    -height 300
+                    -width 400
+                    -title "New Window"
+                    -sizeable 1
+                    $mainWindow`; 
+string $mainColumn = `columnLayout
+                    -adjustableColumn 1
+                    -parent $mainWindow`;
+button -parent $mainColumn  
+                    -label "Say Hello!"
+                    -command "print (\"Hello World\")";
+floatField "myFloatFieldTest";
+floatField;
+floatField;
+
+
+button -parent $mainColumn
+                    -label "Print Field Value"
+                    -command WhatsInFloatField;
+button -parent $mainColumn
+                    -label "Add Numbers" -command Add;
+showWindow $mainWindow;
+
+/* Practice window
+string $mainWindow = `window`;
+    string $mainColumn = `columnLayout`;
+        button -parent $mainColumn;
+        button -parent $mainColumn;
+        intField -parent $mainColumn;
+            string $mainRow = `rowLayout -numberOfColumns 3`;
+                button -parent $mainRow;
+                    string $rColumn = `columnLayout -parent $mainRow`;
+                        button -parent $rColumn;
+                        button -parent $mainRow;
+                        button -parent $mainColumn;
+                        button -parent $rColumn;
+
+showWindow;
+*/
