@@ -168,6 +168,14 @@ global proc float Median(float $num[])
     //even
     else
     {
+        size/2 = middle of odds
+        to get middle of evens
+            ((size/2) - 1)
+
+            A = size/2
+            B = ((size/2) - 1)
+            (A + B) / 2
+        
         return (0);
     }
 
