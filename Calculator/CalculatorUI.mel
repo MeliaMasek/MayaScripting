@@ -171,7 +171,6 @@ global proc float Calculator(float $input[], int $operation)
         $result = Mean($input);
         $operationSymbol = ", ";
         //$sentence = "The mode of ";
-
     }
 
     //perform Median
@@ -188,7 +187,7 @@ global proc float Calculator(float $input[], int $operation)
     }
 
     //pretty print result 
-    string $sentence;
+    global string $sentence;
     $sentence = "The result of ";
     $sentence += (floatArrayToString($input, $operationSymbol));
     $sentence += " = " + $result + "\n";
@@ -196,98 +195,131 @@ global proc float Calculator(float $input[], int $operation)
     return ($result);
 }
 }
-//Calculator({1, 0, 2}, 6);10
+//Calculator({1, 0, 2}, 6);
 
-/*
+
 global proc calcButtonCommand()
-{
-    string $resultField = `optionVar -q "calcResult"`;
+{ 
+    global string $userInput;
+    global int $indexValue = 0;
 
+    global float $enterValue[];
+    $enterValue[$indexValue] = (float)$userInput;
 
-    string $result = Calculator();
-    textField -e -text $result $resultField;
+    $userInput = "";
+
+    $indexValue++;
+
+    print ($enterValue);
+
 }
-*/
 
 global proc onepress()
 {
-    $one = 1;
-    print ($one);
+    global string $userInput;
+    $userInput += "1";
+    print ($userInput + "\n");
 }
 
 global proc twopress()
 {
-    $two = 2;
-    print ($two);
+    global string $userInput;
+    $userInput += "2";
+    print ($userInput + "\n");
 }
 
 global proc threepress()
 {
-    $three = 3;
-    print ($three);
+    global string $userInput;
+    $userInput += "3";
+    print ($userInput + "\n");    
 }
 
 global proc fourpress()
 {
-    $four = 4;
-    print ($four);
+    global string $userInput;
+    $userInput += "4";
+    print ($userInput + "\n");
 }
 
 global proc fivepress()
 {
-    $five = 5;
-    print ($five);
+    global string $userInput;
+    $userInput += "5";
+    print ($userInput + "\n");
 }
 
 global proc sixpress()
 {
-    $six = 6;
-    print ($six);
+    global string $userInput;
+    $userInput += "6";
+    print ($userInput + "\n");
 }
 
 global proc sevenpress()
 {
-    $seven = 7;
-    print ($seven);
+    global string $userInput;
+    $userInput += "7";
+    print ($userInput + "\n");
 }
 
 global proc eightpress()
 {
-    $eight = 8;
-    print ($eight);
+    global string $userInput;
+    $userInput += "8";
+    print ($userInput + "\n");
 }
 
 global proc ninepress()
 {
-    $nine = 9;
-    print ($nine);
+    global string $userInput;
+    $userInput += "9";
+    print ($userInput + "\n");
 }
 
 global proc zeropress()
 {
-    $zero = 0;
-    print ($zero);
+    global string $userInput;
+    $userInput += "0";
+    print ($userInput + "\n");
 }
 
 global proc decpress()
 {
-    $dec = ".";
-    print ($dec);
+    global string $userInput;
+    $userInput += ".";
+    print ($userInput + "\n");
 }
 
 global proc clearpress()
 {
-    $clear = " "; 
-    delete "calcResult";
+    global int $indexValue;
+    global float $enterValue[];
+    global string $userInput;
+    $userInput = "";
+    $indexValue = 0;
+    clear $enterValue;
+    print ($userInput + "\n");
 }
 
+global proc printoutUI()
+{
+global string $sentence;
+//$sentence = textField;
+
+//print ($sentence);
+}
 
 global proc CalculatorUI()
 {
+    global string $userInput;
+
     string $calcWindow = "calcWindow";
 
     if(`window -exists $calcWindow`)
     deleteUI $calcWindow;
+
+    printoutUI();
 
 $calcWindow = `window
                     -title "Calculator"
@@ -307,7 +339,7 @@ string $GridNumbers = `gridLayout
                             -parent $calcWindow`;
 
 optionVar
-    -stringValue "calcResult" `textField
+    -stringValue "printoutUI" `textField
     -parent $mainColumn
     -height 50
     -editable 0`;
@@ -367,33 +399,45 @@ button
     -label "."
     -command "decpress";
 
-button
+button 
     -parent $GridNumbers
-    -label "+";
+    -label "+"
+    -command "Calculator($enterValue, 1)";
+
+button 
+    -parent $GridNumbers
+    -label "-"
+    -command "Calculator($enterValue, 2)";
+
+button 
+    -parent $GridNumbers
+    -label "*"
+    -command "Calculator($enterValue, 3)";
+
+button 
+    -parent $GridNumbers
+    -label "/"
+    -command "Calculator($enterValue, 4)";
+
+button 
+    -parent $GridNumbers
+    -label "^"
+    -command "Calculator($enterValue, 5)";
+
+button 
+    -parent $GridNumbers
+    -label "Mode"
+    -command "Calculator($enterValue, 6)";
+
+button 
+    -parent $GridNumbers
+    -label "Median"
+    -command "Calculator($enterValue, 7)";
 
 button
     -parent $GridNumbers
-    -label "-";
-
-button
-    -parent $GridNumbers
-    -label "/";
-
-button
-    -parent $GridNumbers
-    -label "*";
-
-button
-    -parent $GridNumbers
-    -label "Mode";
-
-button
-    -parent $GridNumbers
-    -label "Median";
-
-button
-    -parent $GridNumbers
-    -label "Enter";
+    -label "Enter"
+    -command "calcButtonCommand";
 
 button
     -parent $GridNumbers
