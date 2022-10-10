@@ -1,6 +1,6 @@
                         //Calculator function
 
-//Cant figure out how to print to the UI textfield, rest of the code works as it should but that part is stumping me.
+//Cant figure out how to clear the UItextfield so that on clear it resets the amount of textfields to just one. 
 
 //Addition 1
 global proc float Addition(float $num[])
