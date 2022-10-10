@@ -1,7 +1,5 @@
                         //Calculator function
 
-//Cant figure out how to clear the UItextfield so that on clear it resets the amount of textfields to just one. 
-
 //Addition 1
 global proc float Addition(float $num[])
 {
