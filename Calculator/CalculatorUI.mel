@@ -196,7 +196,12 @@ global proc float Calculator(float $input[], int $operation)
     $sentence += (floatArrayToString($input, $operationSymbol));
     $sentence += " = " + $result + "\n";
     print ($sentence);
-    textField -text ($sentence) -editable 0;
+
+ string $textField = `optionVar -q "resultField"`;
+
+ string $text = `textField -q -text $textField`;
+
+    textField -e -text ($sentence) $textField;
     return ($result);
 }
 }
@@ -303,9 +308,12 @@ global proc clearpress()
     $indexValue = 0;
     $sentence = "";
     clear $enterValue;
-    textField -text ($sentence) -editable 0;
-    //string $result = `optionVar -q  "result"`; 
-    //string $text = `textField -q text $sentence;
+    
+ string $textField = `optionVar -q "resultField"`;
+
+ string $text = `textField -q -text $textField`;
+
+textField -e -text ($sentence) $textField;
 
     print ($userInput + "\n");
 }
@@ -344,12 +352,13 @@ string $Instructions = `gridLayout
                             -parent $calcWindow`;
 global string $sentence;
 
-textField
+optionVar 
+    -stringValue "resultField" `textField
     -parent $mainColumn
     -height 55
     -width 390
     -editable 0
-    -text ($sentence);
+    -text ($sentence)`;
 
 button
     -parent $GridNumbers

@@ -1,0 +1,69 @@
+//backticks for maya commands only
+
+//Radiobuttons
+//most you can have is 4, use radioCollection to use more then 4
+
+global proc buttoncommand()
+{
+    string $rcollection = `optionVar -q "myCollection"`;
+    string $rbutton = `radioCollection -q -select$rcollection`;
+    print (`radioButton -q -label $rbutton`);
+    print (`radioButton -q -data $rbutton`);
+
+}
+
+global proc MyUI()
+{
+    string $myWindow = "MyUI";
+
+    if(`window -exists $ftWindow`)
+        deleteUI $ftWindow;
+
+    $ftWindow = `window 
+                    -title "Buttons" 
+                    -widthHeight 300 400
+                    -resizeToFitChildren 1
+                    $ftWindow`; 
+
+    string $mainColumn = `columnLayout 
+                                -parent $ftWindow
+                                -adjustableColumn 1`;
+    string $rcollection = `radioCollection -parent $mainColumn`;
+    optionVar -stringValue "myCollection" $rcollection;
+    radioButton -parent $mainColumn -collection $rcollection -label "Add";
+    radioButton -parent $mainColumn -collection $rcollection -label "Sub";
+    radioButton -parent $mainColumn -collection $rcollection -label "Div";
+    radioButton -parent $mainColumn -collection $rcollection -label "Mul";
+    radioButton -parent $mainColumn -collection $rcollection -data 10;
+    radioButton -parent $mainColumn -collection $rcollection -data 15;
+    radioButton -parent $mainColumn -collection $rcollection -data 20;
+    radioButton -parent $mainColumn -collection $rcollection -data 25;
+
+    button -parent $mainColumn -command "buttoncommand";
+}
+
+//optionVar
+
+/*
+a "global" varaible that can be called on from any script 
+    gets saved to your pref folder so it is saved on reopening
+        global varaible doesnt
+*/
+
+    //A way to store information, each cannot see each other 
+    string $nameField = `optionVar -q "ftNameField"`;
+
+    string $yearField = `optionVar -q "ftYearField"`;
+    
+    string $operField = `optionVar -q "ftOperation"`;
+    
+    string $resultField = `optionVar -q "ftResult"`;
+
+    string $name = `textField -q -text $nameField`;
+    string $year = `intField -q -value $yearField`;
+    string $oper = `radioButtonGrp -q -select $operField`;
+
+    string $result = FortuneTeller($name, $year, $oper);
+    
+    textField -e -text $result $resultField;
+    //recalls the stored information, going from a string to float, then needs to query that information
