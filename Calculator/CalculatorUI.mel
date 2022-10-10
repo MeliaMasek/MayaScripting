@@ -1,5 +1,7 @@
                         //Calculator function
 
+//Cant figure out how to print to the UI textfield, rest of the code works as it should but that part is stumping me.
+
 //Addition 1
 global proc float Addition(float $num[])
 {
@@ -323,7 +325,8 @@ global proc CalculatorUI()
 
 $calcWindow = `window
                     -title "Calculator"
-                    -widthHeight 200 200
+                    -width  390
+                    -height 200
                     -resizeToFitChildren 1
                     $calcWindow`;
 
@@ -333,15 +336,22 @@ string $mainColumn = `columnLayout
 
 string $GridNumbers = `gridLayout
                             -cellHeight 75
-                            -cellWidth 75
+                            -cellWidth 78
                             -numberOfColumns 5
                             -numberOfRows 4
+                            -parent $calcWindow`;
+string $Instructions = `gridLayout
+                            -cellHeight 60
+                            -cellWidth 390
+                            -numberOfColumns 1
+                            -numberOfRows 1
                             -parent $calcWindow`;
 
 optionVar
     -stringValue "printoutUI" `textField
     -parent $mainColumn
-    -height 50
+    -height 55
+    -width 390
     -editable 0`;
 
 button
@@ -443,8 +453,10 @@ button
     -parent $GridNumbers
     -label "Clear"
     -command "clearpress";
+button
+    -parent $Instructions
+    -label ("How to use:" + "\n" +  "click on the number you want and then click enter to add it into your array." + "\n" + "Continue this process until you have inputed all your values," + "\n" + "and then select the operation type you wish to use.");
 
 showWindow $calcWindow;
 }
-
 CalculatorUI();
