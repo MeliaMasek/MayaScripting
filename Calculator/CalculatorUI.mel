@@ -190,10 +190,13 @@ global proc float Calculator(float $input[], int $operation)
 
     //pretty print result 
     global string $sentence;
+    global float $enterValue[];
+
     $sentence = "The result of ";
     $sentence += (floatArrayToString($input, $operationSymbol));
     $sentence += " = " + $result + "\n";
     print ($sentence);
+    textField -text ($sentence) -editable 0;
     return ($result);
 }
 }
@@ -209,11 +212,8 @@ global proc calcButtonCommand()
     $enterValue[$indexValue] = (float)$userInput;
 
     $userInput = "";
-
     $indexValue++;
-
     print ($enterValue);
-
 }
 
 global proc onepress()
@@ -294,22 +294,20 @@ global proc decpress()
 }
 
 global proc clearpress()
-{
+{   
+    global string $sentence;
     global int $indexValue;
     global float $enterValue[];
     global string $userInput;
     $userInput = "";
     $indexValue = 0;
+    $sentence = "";
     clear $enterValue;
+    textField -text ($sentence) -editable 0;
+    //string $result = `optionVar -q  "result"`; 
+    //string $text = `textField -q text $sentence;
+
     print ($userInput + "\n");
-}
-
-global proc printoutUI()
-{
-global string $sentence;
-//$sentence = textField;
-
-//print ($sentence);
 }
 
 global proc CalculatorUI()
@@ -320,8 +318,6 @@ global proc CalculatorUI()
 
     if(`window -exists $calcWindow`)
     deleteUI $calcWindow;
-
-    printoutUI();
 
 $calcWindow = `window
                     -title "Calculator"
@@ -346,13 +342,14 @@ string $Instructions = `gridLayout
                             -numberOfColumns 1
                             -numberOfRows 1
                             -parent $calcWindow`;
+global string $sentence;
 
-optionVar
-    -stringValue "printoutUI" `textField
+textField
     -parent $mainColumn
     -height 55
     -width 390
-    -editable 0`;
+    -editable 0
+    -text ($sentence);
 
 button
     -parent $GridNumbers
