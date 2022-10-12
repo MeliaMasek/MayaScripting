@@ -1,0 +1,66 @@
+//Randomly Generates objects in a scene
+
+proc RandomGenerator(int $duplicate, float $minX, float $maxX, float $minY, float $maxY, float $minZ, float $maxZ)
+    {
+        for ($i = 0; $i < $duplicate; $i++)
+        {
+            duplicate $duplicate ls -sl;
+            rand $duplicate;
+        }
+    }
+
+RandomGenerator(5, 1, 1, 1, 1, 1, 1);
+
+global proc RandomGeneratorUI()
+{
+    string $randgenUI= "randgenUI";
+
+    if(`window -exists $randgenUI`)
+        deleteUI $randgenUI;
+
+    $randgenUI = `window 
+                    -title "Random Placement Generator" 
+                    -widthHeight 150 150
+                    -resizeToFitChildren 1
+                    $randgenUI`; 
+
+    string $mainColumn = `columnLayout 
+                                -parent $randgenUI
+                                -adjustableColumn 1`;
+    
+    textField
+        -parent $mainColumn 
+        -placeholderText "Number of Duplicates";
+
+    textField
+        -parent $mainColumn
+        -placeholderText "Min X value";
+    
+    textField
+        -parent $mainColumn
+        -placeholderText "Max X value";
+    
+    textField
+        -parent $mainColumn
+        -placeholderText "Min y value";
+
+    textField
+        -parent $mainColumn
+        -placeholderText "Max y value";
+    
+    textField
+        -parent $mainColumn
+        -placeholderText "Min z value";
+
+    textField
+        -parent $mainColumn
+        -placeholderText "Max z value";
+
+    button
+        -parent $mainColumn
+        -label "Enter"
+        -command "RandomGeneratorUI";
+
+    showWindow $randgenUI;
+}
+RandomGeneratorUI();
