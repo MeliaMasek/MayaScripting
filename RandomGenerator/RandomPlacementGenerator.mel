@@ -1,8 +1,8 @@
 //Randomly Generates objects in a scene
-proc RandomGenerator(int $numdup, float $minX, float $maxX, float $minY, float $maxY, float $minZ, float $maxZ)
+global proc RandomGenerator(int $numdup, float $minX, float $maxX, float $minY, float $maxY, float $minZ, float $maxZ)
 {
     //Duplicates selection by X times
-    for ($i = 0; $i < $numdup; $i++)
+    for ($i = 1; $i < $numdup; $i++)
     {
         ls -selection;
         duplicate -rr;  
@@ -47,32 +47,29 @@ proc RandomGenerator(int $numdup, float $minX, float $maxX, float $minY, float $
         move 0 0 $posZ;
         */
 }
-RandomGenerator(5, -10, 10, -10, 10, -10, 10);
+//RandomGenerator(5, -10, 10, -10, 10, -10, 10);
 
 //UI
 global proc Submit()
 {
-    string $DuplicateField = `optionVar -q "numOfDuplicates"`;
-    string $MinXField = `optionVar -q "Minx"`;
-    string $MaxXField = `optionVar -q "Maxx"`;
-    string $MinYField = `optionVar -q "MinY"`;
-    string $MaxYField = `optionVar -q "MaxY"`;
-    string $MinZField = `optionVar -q "MinZ"`;
-    string $MaxZField = `optionVar -q "MaxZ"`;
+    string $numdupField = `optionVar -q "numOfDuplicates"`;
+    string $minXField = `optionVar -q "minx"`;
+    string $maxXField = `optionVar -q "maxx"`;
+    string $minYField = `optionVar -q "miny"`;
+    string $maxYField = `optionVar -q "maxy"`;
+    string $minZField = `optionVar -q "minz"`;
+    string $maxZField = `optionVar -q "maxz"`;
 
-    string $Dup = `intField -q -Value $DuplicateField`;
-    string $MinX = `textField -q -text $MinXField`;
-    string $MaxX = `textField -q -text $MaxXField`;
-    string $MinY = `textField -q -text $MinYField`;
-    string $MaxY = `textField -q -text $MaxYField`;
-    string $MinZ = `textField -q -text $MinZField`;
-    string $MaxZ = `textField -q -text $MaxZField`;
+    string $numdup = `intField -q -value $numdupField`;
+    string $minX = `textField -q -text $minXField`;
+    string $maxX = `textField -q -text $maxXField`;
+    string $minY = `textField -q -text $minYField`;
+    string $maxY = `textField -q -text $maxYField`;
+    string $minZ = `textField -q -text $minZField`;
+    string $maxZ = `textField -q -text $maxZField`;
 
-    string $result = RandomGenerator($Dup $MinX $MaxX $minY $maxY $minZ $maxZ);
-    textField -e -text $result;
-
+    RandomGenerator($numdup, $minX, $maxX, $minY, $maxY, $minZ, $maxZ);
 }
-
 
 global proc RandomGeneratorUI()
 {
@@ -82,53 +79,53 @@ global proc RandomGeneratorUI()
         deleteUI $randgenUI;
 
     $randgenUI = `window 
-                    -title "Random Placement Generator" 
-                    -widthHeight 200 200
-                    -resizeToFitChildren 1
-                    $randgenUI`; 
+        -title "Random Placement Generator" 
+        -widthHeight 250 250
+        -resizeToFitChildren 1
+        $randgenUI`; 
 
     string $mainColumn = `columnLayout 
-                                -parent $randgenUI
-                                -adjustableColumn 1`;
+        -parent $randgenUI
+        -adjustableColumn 1`;
     
 optionVar
         -stringValue "numOfDuplicates"    
-        `textField
-        -parent $mainColumn 
-        -placeholderText "Number of Duplicates"`;
+        `intField
+        -parent $mainColumn`;
+        //-placeholderText "Number of Duplicates"`;
 
 optionVar
-        -stringValue "Minx"    
+        -stringValue "minx"    
         `textField
         -parent $mainColumn
         -placeholderText "Min X value"`;
     
 optionVar
-        -stringValue "Maxx"    
+        -stringValue "maxx"    
         `textField
         -parent $mainColumn
         -placeholderText "Max X value"`;
     
 optionVar
-        -stringValue "Miny"    
+        -stringValue "miny"    
         `textField
         -parent $mainColumn
         -placeholderText "Min y value"`;
 
 optionVar
-        -stringValue "Maxy"    
+        -stringValue "maxy"    
         `textField
         -parent $mainColumn
         -placeholderText "Max y value"`;
     
 optionVar
-        -stringValue "Minz"    
+        -stringValue "minz"    
         `textField
         -parent $mainColumn
         -placeholderText "Min z value"`;
 
 optionVar
-        -stringValue "Maxz"    
+        -stringValue "maxz"    
         `textField
         -parent $mainColumn
         -placeholderText "Max z value"`;
@@ -138,6 +135,6 @@ button
         -label "Enter"
         -command "Submit";
 
-    showWindow $randgenUI;
+showWindow $randgenUI;
 }
 RandomGeneratorUI();
