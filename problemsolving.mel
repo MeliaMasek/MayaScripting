@@ -1,0 +1,33 @@
+/*
+problem solving:
+    component (vertices, edges, etc.)
+    center of selection (x,y,z)
+    create a locator and position it at the center of the selection
+        under create -> locator
+
+    make selection -> deform -> cluster
+*/
+ 
+/*group code doesn't work
+global proc LocatorCenter()
+{
+string $selection[] = `ls -selection`;
+cluster;
+xform -q -worldspace -pivots;
+
+spaceLocator;
+}
+*/
+
+string $selection[] = `ls -selection`;
+
+string $clusterArray[] = `cluster $selection`;
+string $cluster = $clusterArray[1];
+
+float $pos = `xform -q -worldSpace -rotatePivot $cluster`;
+
+string $locator[] = `spaceLocator`;
+
+xform -worldSpace -translation $pos[0] $pos[1] $pos[2] $loc;
+delete $cluster;
+
