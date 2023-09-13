@@ -1,6 +1,7 @@
 import maya.cmds as cmds
 
 #Colors are from 0-31
+#red 13, blue 6, green 14, yellow 18
 def ChangeColor(ColorInt):
     selection = cmds.ls(selection = True)
 
