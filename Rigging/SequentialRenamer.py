@@ -1,21 +1,19 @@
 import maya.cmds as cmds
 
-#Can't figure out how to get the "doesn't contain #" to function properly with the naming format
-
 def Namer(string):
     selections = cmds.ls(sl=True)
 
-    x = string
-    txt = ""
-    txt.find("#")
-    try:
-        x >= 0
-        print(x)
-    except:
-        print("doesn't contain #")
+    if '#' not in string:
+        cmds.warning("String doesn't contain '#' symbol.")
+        return
 
-    string.partition("##")
-    for count, object in enumerate(selections):
-        cmds.rename(object, string.partition('#')[0] + str(count + 1).zfill(string.count('#')) + string.rpartition('#')[2])
+    # Split the string into parts before and after the '#' symbol
+    prefix, suffix = string.split('#', 1)
 
+    for count, obj in enumerate(selections):
+        # Rename each object by replacing '#' with the count
+        new_name = f"{prefix}{count+1:0{len(suffix)}}{suffix}"
+        cmds.rename(obj, new_name)
+
+# Test the function
 Namer("Leg_##_Jnt")
