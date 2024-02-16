@@ -29,7 +29,7 @@ def create_color_change_ui():
     # Header for Animation section
     cmds.text(label="Animation", align="center", font="boldLabelFont")
 
-    cmds.button(label="Create Keyframes Every 25 Frames", command=create_keyframes_every_25_frames)
+    cmds.button(label="Create Keyframes Every 25 Frames", command=lambda *args: create_keyframes_every_25_frames())
 
     # Separator
     cmds.separator(style='single')
