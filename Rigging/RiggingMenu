@@ -1,0 +1,196 @@
+import maya.cmds as cmds
+import maya.mel as mel
+
+# Function to change the color of selected objects
+def ChangeColor(ColorInt):
+    selection = cmds.ls(selection=True)
+    for select in selection:
+        cmds.setAttr(select + ".overrideEnabled", True)
+        cmds.setAttr(select + ".overrideColor", ColorInt)
+    print(f"Changed color to {ColorInt} for selected objects.")
+
+# Function to create constraints and attributes for selected controls
+def CreateConstraints():
+    sels = cmds.ls(sl=True)  # [parent control, child control]
+    if len(sels) != 2:
+        print("Please select exactly two objects: parent control and child control.")
+        return
+    
+    parent_ctrl = sels[0]
+    child_ctrl = sels[1]
+
+    # Get parent group of the child control
+    child_ctrl_grp = cmds.listRelatives(child_ctrl, parent=True)[0]
+
+    # Create constraints
+    p_constraint1 = cmds.parentConstraint(parent_ctrl, child_ctrl_grp, mo=True, skipRotate=['x', 'y', 'z'], weight=1)[0]
+    p_constraint2 = cmds.parentConstraint(parent_ctrl, child_ctrl_grp, mo=True, skipTranslate=['x', 'y', 'z'], weight=1)[0]
+    cmds.scaleConstraint(parent_ctrl, child_ctrl_grp, weight=1)
+
+    # Create attributes on the child control
+    if not cmds.attributeQuery('FollowTranslate', node=child_ctrl, exists=True):
+        cmds.addAttr(child_ctrl, ln='FollowTranslate', at='double', min=0, max=1, dv=1)
+        cmds.setAttr('%s.FollowTranslate' % (child_ctrl), e=True, keyable=True)
+    if not cmds.attributeQuery('FollowRotate', node=child_ctrl, exists=True):
+        cmds.addAttr(child_ctrl, ln='FollowRotate', at='double', min=0, max=1, dv=1)
+        cmds.setAttr('%s.FollowRotate' % (child_ctrl), e=True, keyable=True)
+
+    # Connect attributes from child control to constraint weights
+    cmds.connectAttr('%s.FollowTranslate' % (child_ctrl), '%s.w0' % (p_constraint1), f=True)
+    cmds.connectAttr('%s.FollowRotate' % (child_ctrl), '%s.w0' % (p_constraint2), f=True)
+
+    print("Constraints and attributes created.")
+
+# Function to add a new enum attribute to selected objects
+def AddEnumAttribute():
+    enum_options = "Transform:COG:World:Clav"
+    selection = cmds.ls(selection=True)
+
+    if selection:
+        for obj in selection:
+            # Delete the existing attribute if it exists
+            if cmds.attributeQuery('Follow', node=obj, exists=True):
+                cmds.deleteAttr(obj + '.Follow')
+                
+            # Add the new attribute
+            cmds.addAttr(obj, longName="Follow", attributeType="enum", enumName=enum_options, keyable=True)
+            print(f"Added 'Follow' attribute with options '{enum_options}' to {obj}")
+    else:
+        print("No objects selected. Please select one or more controls.")
+
+# Function to add a new enum attribute with additional IK Ctrl option
+def AddEnumAttributeWithIKCtrl():
+    enum_options = "Transform:COG:World:Clav:IK_Ctrl"
+    selection = cmds.ls(selection=True)
+
+    if selection:
+        for obj in selection:
+            # Delete the existing attribute if it exists
+            if cmds.attributeQuery('Follow', node=obj, exists=True):
+                cmds.deleteAttr(obj + '.Follow')
+                
+            # Add the new attribute
+            cmds.addAttr(obj, longName="Follow", attributeType="enum", enumName=enum_options, keyable=True)
+            print(f"Added 'Follow' attribute with options '{enum_options}' to {obj}")
+    else:
+        print("No objects selected. Please select one or more controls.")
+
+# Function to create driven keys based on the Follow attribute
+def create_driven_keys():
+    # Get the selected controls
+    sels = cmds.ls(selection=True)
+    if len(sels) != 3:
+        print("Please select three controls: driver and two driven controls.")
+        return
+
+    driver = sels[0]
+    driven1 = sels[1]
+    driven2 = sels[2]
+
+    # Ensure the "Follow" attribute exists on the driver control
+    if not cmds.attributeQuery('Follow', node=driver, exists=True):
+        print(f"The driver control '{driver}' does not have a 'Follow' attribute.")
+        return
+
+    # Define the attributes and their corresponding driver values
+    attributes = ['Transform', 'COG', 'World', 'Clav']
+    driver_values = {attr: idx for idx, attr in enumerate(attributes)}
+
+    # Ensure the driven controls have the correct attributes
+    for attr in attributes:
+        for driven in [driven1, driven2]:
+            if not cmds.attributeQuery(attr, node=driven, exists=True):
+                cmds.addAttr(driven, ln=attr, at='double', min=0, max=1, dv=0)
+                cmds.setAttr(f"{driven}.{attr}", e=True, keyable=True)
+
+    # Set up driven keys
+    for driver_attr, driver_value in driver_values.items():
+        for driven in [driven1, driven2]:
+            # Set all attributes to 0 first
+            for attr in attributes:
+                cmds.setDrivenKeyframe(f"{driven}.{attr}", currentDriver=f"{driver}.Follow", value=0, driverValue=driver_value)
+                
+            # Set the selected attribute to 1
+            cmds.setDrivenKeyframe(f"{driven}.{driver_attr}", currentDriver=f"{driver}.Follow", value=1, driverValue=driver_value)
+
+    print("Driven keys created successfully.")
+
+def create_driven_keys_PV():
+    # Get the selected controls
+    sels = cmds.ls(selection=True)
+    if len(sels) != 3:
+        print("Please select three controls: driver and two driven controls.")
+        return
+
+    driver = sels[0]
+    driven1 = sels[1]
+    driven2 = sels[2]
+
+    # Ensure the "Follow" attribute exists on the driver control
+    if not cmds.attributeQuery('Follow', node=driver, exists=True):
+        print(f"The driver control '{driver}' does not have a 'Follow' attribute.")
+        return
+
+    # Define the attributes and their corresponding driver values
+    attributes = ['Transform', 'COG', 'World', 'Clav', 'IK_Ctrl']
+    driver_values = {attr: idx for idx, attr in enumerate(attributes)}
+
+    # Ensure the driven controls have the correct attributes
+    for attr in attributes:
+        for driven in [driven1, driven2]:
+            if not cmds.attributeQuery(attr, node=driven, exists=True):
+                cmds.addAttr(driven, ln=attr, at='double', min=0, max=1, dv=0)
+                cmds.setAttr(f"{driven}.{attr}", e=True, keyable=True)
+
+    # Set up driven keys
+    for driver_attr, driver_value in driver_values.items():
+        for driven in [driven1, driven2]:
+            # Set all attributes to 0 first
+            for attr in attributes:
+                cmds.setDrivenKeyframe(f"{driven}.{attr}", currentDriver=f"{driver}.Follow", value=0, driverValue=driver_value)
+                
+            # Set the selected attribute to 1
+            cmds.setDrivenKeyframe(f"{driven}.{driver_attr}", currentDriver=f"{driver}.Follow", value=1, driverValue=driver_value)
+
+    print("Driven keys with PV created successfully.")
+
+# Check if the custom menu already exists and delete it if it does
+if cmds.menu("customScriptsMenu", exists=True):
+    cmds.deleteUI("customScriptsMenu", menu=True)
+
+# Create a new custom menu
+main_window = mel.eval('$temp=$gMainWindow')
+custom_menu = cmds.menu("customScriptsMenu", label="Custom Scripts", parent=main_window, tearOff=True)
+
+# Add menu items to the custom menu for changing colors
+cmds.menuItem(label="Change Color to Red", parent=custom_menu, command=lambda x: ChangeColor(13))
+cmds.menuItem(label="Change Color to Blue", parent=custom_menu, command=lambda x: ChangeColor(6))
+cmds.menuItem(label="Change Color to Green", parent=custom_menu, command=lambda x: ChangeColor(14))
+cmds.menuItem(label="Change Color to Yellow", parent=custom_menu, command=lambda x: ChangeColor(17))
+cmds.menuItem(label="Change Color to White", parent=custom_menu, command=lambda x: ChangeColor(16))
+
+# Add a separator
+cmds.menuItem(divider=True, parent=custom_menu)
+
+# Add menu items to the custom menu for other scripts
+cmds.menuItem(label="Create Broken FK Constraints", parent=custom_menu, command=lambda x: CreateConstraints())
+
+# Add another separator
+cmds.menuItem(divider=True, parent=custom_menu)
+
+# Add the menu item for adding the Follow attribute
+cmds.menuItem(label="Add Follow Attribute", parent=custom_menu, command=lambda x: AddEnumAttribute())
+
+# Add another menu item for adding Follow attribute with IK Ctrl
+cmds.menuItem(label="Add Follow Attribute for PV", parent=custom_menu, command=lambda x: AddEnumAttributeWithIKCtrl())
+
+# Add a separator
+cmds.menuItem(divider=True, parent=custom_menu)
+
+# Add the menu item for creating driven keys
+cmds.menuItem(label="Create Driven Keys", parent=custom_menu, command=lambda x: create_driven_keys())
+
+# Add another menu item for creating driven keys with PV
+cmds.menuItem(label="Create Driven Keys for PV", parent=custom_menu, command=lambda x: create_driven_keys_PV())
+
+print("Custom Scripts menu created.")
