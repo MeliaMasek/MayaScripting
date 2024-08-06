@@ -1,0 +1,18 @@
+import maya.cmds as cmds
+
+# Define the enum options
+ enum_options = "Transform:COG:World:Clav"
+# enum_options = "Transform:COG:World:Clav:IK_Ctrl"
+
+
+# Get the selected objects
+selection = cmds.ls(selection=True)
+
+# Check if any objects are selected
+if selection:
+    for obj in selection:
+        # Add a new enum attribute to each selected object
+        cmds.addAttr(obj, longName="SpaceSwitch", attributeType="enum", enumName=enum_options, keyable=True)
+        print(f"Added 'Follow' attribute to {obj}")
+else:
+    print("No objects selected. Please select one or more controls.")
