@@ -164,7 +164,33 @@ def create_driven_keys_PV():
             # Set the selected attribute to 1
             cmds.setDrivenKeyframe(f"{driven}.{driver_attr}", currentDriver=f"{driver}.Follow", value=1, driverValue=driver_value)
 
-    print("Driven keys created successfully.")
+    print("Driven keys with PV created successfully.")
+
+# Function to add multiple float attributes
+def add_float_attributes():
+    # Define the attribute names
+    attribute_names = [
+        'L_Arm_IK_FK',
+        'R_Arm_IK_FK',
+        'L_Leg_IK_FK',
+        'R_Leg_IK_FK'
+    ]
+
+    # Get the selected objects
+    selection = cmds.ls(selection=True)
+    if not selection:
+        print("No objects selected. Please select one or more objects.")
+        return
+
+    # Add each attribute to the selected objects
+    for obj in selection:
+        for attr_name in attribute_names:
+            if not cmds.attributeQuery(attr_name, node=obj, exists=True):
+                cmds.addAttr(obj, longName=attr_name, attributeType='float', min=0, max=1, defaultValue=0)
+                cmds.setAttr(f"{obj}.{attr_name}", e=True, keyable=True)
+                print(f"Added '{attr_name}' attribute to {obj}")
+            else:
+                print(f"'{attr_name}' attribute already exists on {obj}")
 
 # Check if the custom menu already exists and delete it if it does
 if cmds.menu("customScriptsMenu", exists=True):
@@ -174,42 +200,46 @@ if cmds.menu("customScriptsMenu", exists=True):
 main_window = mel.eval('$temp=$gMainWindow')
 custom_menu = cmds.menu("customScriptsMenu", label="Custom Scripts", parent=main_window, tearOff=True)
 
-# Add menu items to the custom menu for changing colors
-cmds.menuItem(label="Change Ctrl Color to Red", parent=custom_menu, command=lambda x: ChangeColor(13))
-cmds.menuItem(label="Change Ctrl Color to Blue", parent=custom_menu, command=lambda x: ChangeColor(6))
-cmds.menuItem(label="Change Ctrl Color to Green", parent=custom_menu, command=lambda x: ChangeColor(14))
-cmds.menuItem(label="Change Ctrl Color to Yellow", parent=custom_menu, command=lambda x: ChangeColor(17))
-cmds.menuItem(label="Change Ctrl Color to White", parent=custom_menu, command=lambda x: ChangeColor(16))
+# Add headers and menu items to the "Controls" section
+controls_menu = cmds.menuItem(label="Controls", parent=custom_menu, subMenu=True)
+cmds.menuItem(label="Change Ctrl Color to Red", parent=controls_menu, command=lambda x: ChangeColor(13))
+cmds.menuItem(label="Change Ctrl Color to Blue", parent=controls_menu, command=lambda x: ChangeColor(6))
+cmds.menuItem(label="Change Ctrl Color to Green", parent=controls_menu, command=lambda x: ChangeColor(14))
+cmds.menuItem(label="Change Ctrl Color to Yellow", parent=controls_menu, command=lambda x: ChangeColor(17))
+cmds.menuItem(label="Change Ctrl Color to White", parent=controls_menu, command=lambda x: ChangeColor(16))
 
 # Add a separator
 cmds.menuItem(divider=True, parent=custom_menu)
 
-# Add menu items to the custom menu for changing joint colors
-cmds.menuItem(label="Change Jnt Color to Red", parent=custom_menu, command=lambda x: ChangeJointColor(13))
-cmds.menuItem(label="Change Jnt Color to Blue", parent=custom_menu, command=lambda x: ChangeJointColor(6))
-cmds.menuItem(label="Change Jnt Color to Green", parent=custom_menu, command=lambda x: ChangeJointColor(14))
-cmds.menuItem(label="Change Jnt Color to Yellow", parent=custom_menu, command=lambda x: ChangeJointColor(17))
-cmds.menuItem(label="Change Jnt Color to White", parent=custom_menu, command=lambda x: ChangeJointColor(16))
+# Add headers and menu items to the "Joints" section
+joints_menu = cmds.menuItem(label="Joints", parent=custom_menu, subMenu=True)
+cmds.menuItem(label="Change Jnt Color to Red", parent=joints_menu, command=lambda x: ChangeJointColor(13))
+cmds.menuItem(label="Change Jnt Color to Blue", parent=joints_menu, command=lambda x: ChangeJointColor(6))
+cmds.menuItem(label="Change Jnt Color to Green", parent=joints_menu, command=lambda x: ChangeJointColor(14))
+cmds.menuItem(label="Change Jnt Color to Yellow", parent=joints_menu, command=lambda x: ChangeJointColor(17))
+cmds.menuItem(label="Change Jnt Color to White", parent=joints_menu, command=lambda x: ChangeJointColor(16))
 
 # Add a separator
 cmds.menuItem(divider=True, parent=custom_menu)
 
-# Add menu items to the custom menu for other scripts
-cmds.menuItem(label="Create Constraints", parent=custom_menu, command=lambda x: CreateConstraints())
+# Add menu items for other scripts
+cmds.menuItem(label="Create Broken FK Constraints", parent=custom_menu, command=lambda x: CreateConstraints())
 
-# Add another separator
+# Add a separator
 cmds.menuItem(divider=True, parent=custom_menu)
 
-# Add the menu item for adding the Follow attribute
 cmds.menuItem(label="Add Follow Attribute", parent=custom_menu, command=lambda x: AddEnumAttribute())
-
-# Add another menu item for adding Follow attribute with IK Ctrl
 cmds.menuItem(label="Add Follow Attribute with IK Ctrl", parent=custom_menu, command=lambda x: AddEnumAttributeWithIKCtrl())
 
 # Add a separator
 cmds.menuItem(divider=True, parent=custom_menu)
 
-# Add the menu item for creating driven keys
 cmds.menuItem(label="Create Driven Keys", parent=custom_menu, command=lambda x: create_driven_keys())
+cmds.menuItem(label="Create Driven Keys with PV", parent=custom_menu, command=lambda x: create_driven_keys_PV())
+
+# Add a separator
+cmds.menuItem(divider=True, parent=custom_menu)
+
+cmds.menuItem(label="IK_FK Transform", parent=custom_menu, command=lambda x: add_float_attributes())
 
 print("Custom Scripts menu created.")
