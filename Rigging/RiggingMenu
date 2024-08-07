@@ -192,6 +192,67 @@ def add_float_attributes():
             else:
                 print(f"'{attr_name}' attribute already exists on {obj}")
 
+import maya.cmds as cmds
+
+def set_keyframes():
+    # Get the selected object
+    selected = cmds.ls(selection=True)
+    if not selected:
+        cmds.warning("Please select an object.")
+        return
+    
+    obj = selected[0]
+    
+    # Create the UI
+    if cmds.window("rotationUI", exists=True):
+        cmds.deleteUI("rotationUI")
+        
+    window = cmds.window("rotationUI", title="Set Rotation Keyframes", widthHeight=(300, 150))
+    cmds.columnLayout(adjustableColumn=True)
+    
+    cmds.text(label="Enter Rotation Value")
+    
+    cmds.floatFieldGrp('rotationValue', numberOfFields=1, label='Rotation Value', value1=60.0)
+    
+    cmds.button(label="Set Keyframes", command=lambda x: apply_keyframes(obj))
+    cmds.button(label="Cancel", command=lambda x: cmds.deleteUI(window))
+    
+    cmds.showWindow(window)
+
+def apply_keyframes(obj):
+    rotation_value = cmds.floatFieldGrp('rotationValue', query=True, value1=True)
+    
+    # Set keyframes at specific frames with the editable rotation value
+    cmds.setKeyframe(obj, time=20, attribute='rotateX', value=rotation_value)
+    cmds.setKeyframe(obj, time=20, attribute='rotateY', value=0)
+    cmds.setKeyframe(obj, time=20, attribute='rotateZ', value=0)
+    
+    cmds.setKeyframe(obj, time=40, attribute='rotateX', value=-rotation_value)
+    cmds.setKeyframe(obj, time=40, attribute='rotateY', value=0)
+    cmds.setKeyframe(obj, time=40, attribute='rotateZ', value=0)
+    
+    cmds.setKeyframe(obj, time=60, attribute='rotateX', value=0)
+    cmds.setKeyframe(obj, time=60, attribute='rotateY', value=rotation_value)
+    cmds.setKeyframe(obj, time=60, attribute='rotateZ', value=0)
+    
+    cmds.setKeyframe(obj, time=80, attribute='rotateX', value=0)
+    cmds.setKeyframe(obj, time=80, attribute='rotateY', value=-rotation_value)
+    cmds.setKeyframe(obj, time=80, attribute='rotateZ', value=0)
+    
+    cmds.setKeyframe(obj, time=100, attribute='rotateX', value=0)
+    cmds.setKeyframe(obj, time=100, attribute='rotateY', value=0)
+    cmds.setKeyframe(obj, time=100, attribute='rotateZ', value=rotation_value)
+    
+    cmds.setKeyframe(obj, time=120, attribute='rotateX', value=0)
+    cmds.setKeyframe(obj, time=120, attribute='rotateY', value=0)
+    cmds.setKeyframe(obj, time=120, attribute='rotateZ', value=-rotation_value)
+    
+    cmds.deleteUI("rotationUI")
+    cmds.inViewMessage(amg='Keyframes set at specified frames for <hl>%s</hl>.' % obj, pos='midCenter', fade=True)
+
+# Run the function to show the UI
+set_keyframes()
+
 # Check if the custom menu already exists and delete it if it does
 if cmds.menu("customScriptsMenu", exists=True):
     cmds.deleteUI("customScriptsMenu", menu=True)
@@ -241,5 +302,10 @@ cmds.menuItem(label="Create Driven Keys with PV", parent=custom_menu, command=la
 cmds.menuItem(divider=True, parent=custom_menu)
 
 cmds.menuItem(label="IK_FK Transform", parent=custom_menu, command=lambda x: add_float_attributes())
+
+# Add a separator
+cmds.menuItem(divider=True, parent=custom_menu)
+
+cmds.menuItem(label="Set Keyframes with Editable Rotations", parent=custom_menu, command=lambda x: set_keyframes())
 
 print("Custom Scripts menu created.")
