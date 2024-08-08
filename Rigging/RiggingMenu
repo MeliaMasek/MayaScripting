@@ -222,6 +222,11 @@ def set_keyframes():
 def apply_keyframes(obj):
     rotation_value = cmds.floatFieldGrp('rotationValue', query=True, value1=True)
     
+    # Set keyframe at frame 0 with all rotations set to 0
+    cmds.setKeyframe(obj, time=0, attribute='rotateX', value=0)
+    cmds.setKeyframe(obj, time=0, attribute='rotateY', value=0)
+    cmds.setKeyframe(obj, time=0, attribute='rotateZ', value=0)
+    
     # Set keyframes at specific frames with the editable rotation value
     cmds.setKeyframe(obj, time=20, attribute='rotateX', value=rotation_value)
     cmds.setKeyframe(obj, time=20, attribute='rotateY', value=0)
@@ -252,6 +257,7 @@ def apply_keyframes(obj):
 
 # Run the function to show the UI
 set_keyframes()
+
 
 # Check if the custom menu already exists and delete it if it does
 if cmds.menu("customScriptsMenu", exists=True):
