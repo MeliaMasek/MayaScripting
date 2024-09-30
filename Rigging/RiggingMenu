@@ -21,37 +21,43 @@ def ChangeJointColor(ColorInt):
         cmds.setAttr(select + ".overrideColor", ColorInt)
     print(f"Changed color to {ColorInt} for selected joints.")
 
-# Function to create constraints and attributes for selected controls
+# Function to create constraints and attributes between consecutive controls
 def CreateConstraints():
-    sels = cmds.ls(sl=True)  # [parent control, child control]
-    if len(sels) != 2:
-        print("Please select exactly two objects: parent control and child control.")
+    sels = cmds.ls(sl=True)
+    
+    if len(sels) < 2:
+        print("Please select at least two objects.")
         return
     
-    parent_ctrl = sels[0]
-    child_ctrl = sels[1]
+    # Iterate over selected controls in pairs
+    for i in range(len(sels) - 1):
+        parent_ctrl = sels[i]
+        child_ctrl = sels[i + 1]
 
-    # Get parent group of the child control
-    child_ctrl_grp = cmds.listRelatives(child_ctrl, parent=True)[0]
+        # Get parent group of the child control
+        child_ctrl_grp = cmds.listRelatives(child_ctrl, parent=True)[0]
 
-    # Create constraints
-    p_constraint1 = cmds.parentConstraint(parent_ctrl, child_ctrl_grp, mo=True, skipRotate=['x', 'y', 'z'], weight=1)[0]
-    p_constraint2 = cmds.parentConstraint(parent_ctrl, child_ctrl_grp, mo=True, skipTranslate=['x', 'y', 'z'], weight=1)[0]
-    cmds.scaleConstraint(parent_ctrl, child_ctrl_grp, weight=1)
+        # Create constraints
+        p_constraint1 = cmds.parentConstraint(parent_ctrl, child_ctrl_grp, mo=True, skipRotate=['x', 'y', 'z'], weight=1)[0]
+        p_constraint2 = cmds.parentConstraint(parent_ctrl, child_ctrl_grp, mo=True, skipTranslate=['x', 'y', 'z'], weight=1)[0]
+        cmds.scaleConstraint(parent_ctrl, child_ctrl_grp, weight=1)
 
-    # Create attributes on the child control
-    if not cmds.attributeQuery('FollowTranslate', node=child_ctrl, exists=True):
-        cmds.addAttr(child_ctrl, ln='FollowTranslate', at='double', min=0, max=1, dv=1)
-        cmds.setAttr('%s.FollowTranslate' % (child_ctrl), e=True, keyable=True)
-    if not cmds.attributeQuery('FollowRotate', node=child_ctrl, exists=True):
-        cmds.addAttr(child_ctrl, ln='FollowRotate', at='double', min=0, max=1, dv=1)
-        cmds.setAttr('%s.FollowRotate' % (child_ctrl), e=True, keyable=True)
+        # Create attributes on the child control
+        if not cmds.attributeQuery('FollowTranslate', node=child_ctrl, exists=True):
+            cmds.addAttr(child_ctrl, ln='FollowTranslate', at='double', min=0, max=1, dv=1)
+            cmds.setAttr('%s.FollowTranslate' % (child_ctrl), e=True, keyable=True)
+        if not cmds.attributeQuery('FollowRotate', node=child_ctrl, exists=True):
+            cmds.addAttr(child_ctrl, ln='FollowRotate', at='double', min=0, max=1, dv=1)
+            cmds.setAttr('%s.FollowRotate' % (child_ctrl), e=True, keyable=True)
 
-    # Connect attributes from child control to constraint weights
-    cmds.connectAttr('%s.FollowTranslate' % (child_ctrl), '%s.w0' % (p_constraint1), f=True)
-    cmds.connectAttr('%s.FollowRotate' % (child_ctrl), '%s.w0' % (p_constraint2), f=True)
+        # Connect attributes from child control to constraint weights
+        cmds.connectAttr('%s.FollowTranslate' % (child_ctrl), '%s.w0' % (p_constraint1), f=True)
+        cmds.connectAttr('%s.FollowRotate' % (child_ctrl), '%s.w0' % (p_constraint2), f=True)
 
-    print("Constraints and attributes created.")
+        print(f"Constraints and attributes created between {parent_ctrl} and {child_ctrl}.")
+
+# Example usage:
+# Select multiple controls in the order you want them constrained and run CreateConstraints()
 
 # Function to add a new enum attribute to selected objects
 def AddEnumAttribute():
